@@ -1,0 +1,10 @@
+/*!
+ * Main - Custom Styles
+ *
+ * Author - Nic Marson
+ * Date - 1/22/2013
+ * Version - 1.0
+ *
+ * Designed and built to fix consistency issues with the Medicare site
+ */.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}.clearfix:after{clear:both}.hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}body{padding-top:20px;padding-bottom:40px}h1{color:#0881c2;font-size:36px;line-height:46px;margin:10px 0;text-shadow:0 0 1px rgba(0,0,0,.1)}h2{color:#ca5400;font-size:28px;line-height:36px;text-shadow:0 0 1px rgba(0,0,0,.1)}h3{font-size:20px;line-height:26px;text-shadow:0 0 1px rgba(0,0,0,.1)}ul.bulleted li{margin:10px 0}ul.bulleted>li{list-style:square}.generatedcontent ul.bulleted>li{list-style:none;position:relative}.generatedcontent ul.bulleted>li:before{background:#ca5400;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;content:"";height:8px;left:-20px;position:absolute;top:7px;width:8px}nav.toplevel{position:relative}nav.toplevel .breadcrumb{background:0;margin:0;padding:0}nav.toplevel .breadcrumb form{margin:0;padding-left:10px}.nav-utility{position:absolute;right:0;top:0}.nav-help{bottom:10px;position:absolute;right:0}.hero-image{padding:0;position:relative}.hero-medicare{background:url("http://www.regence.com/medicare/images/homebox-bg.jpg") no-repeat #5a8396}.hero-medicare h1{color:#fff;font-size:40px;line-height:40px}.hero-medicare h1 small{color:#fff;font-size:30px;line-height:36px}.hero-medicare .hero-inner{height:120px;padding-left:365px;padding-top:30px}.btn-container-bottom{padding-bottom:40px;position:relative}.btn-container-bottom .btn{bottom:0;left:0;position:absolute}
+/* This beautiful CSS-File has been crafted with LESS (lesscss.org) and compiled by simpLESS (wearekiss.com/simpless) */

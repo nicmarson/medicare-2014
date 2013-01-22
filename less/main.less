@@ -1,0 +1,130 @@
+/*!
+ * Main - Custom Styles
+ *
+ * Author - Nic Marson
+ * Date - 1/22/2013
+ * Version - 1.0
+ *
+ * Designed and built to fix consistency issues with the Medicare site
+ */
+
+// Core variables and mixins
+@import "variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "mixins.less";
+
+body {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+// Headings
+// -------------------------
+h1 {
+  color: @brand;
+  font-size: 36px;
+  line-height: 46px;
+  margin: 10px 0;
+  text-shadow: 0 0 1px rgba(0,0,0,.1); // Helps text rendering on Windows
+}
+h2 {
+  color: @orange;
+  font-size: 28px;
+  line-height: 36px;
+  text-shadow: 0 0 1px rgba(0,0,0,.1); // Helps text rendering on Windows
+}
+h3 {
+  font-size: 20px;
+  line-height: 26px;
+  text-shadow: 0 0 1px rgba(0,0,0,.1); // Helps text rendering on Windows
+}
+
+// Orange Square Bullets
+ul.bulleted li {
+  margin: @baseLineHeight / 2 0;
+}
+ul.bulleted > li {
+  list-style: square;
+}
+.generatedcontent {
+
+  ul.bulleted > li {
+    list-style: none;
+    position: relative;
+  }
+  ul.bulleted > li:before {
+    background: @bulletBackground;
+    .border-radius(2px);
+    content: "";
+    height: 8px;
+    left: -(@listIndent);
+    position: absolute;
+    top: @baseFontSize / 2;
+    width: 8px;
+  }
+}
+
+// Navigation
+nav.toplevel {
+  position: relative;
+
+  .breadcrumb {
+    background: none;
+    margin: 0;
+    padding: 0;
+
+    form {
+      margin: 0;
+      padding-left: 10px;
+    }
+  }
+}
+.nav-utility {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.nav-help {
+  bottom: 10px;
+  position: absolute;
+  right: 0;
+}
+
+// Hero with image
+.hero-image {
+  padding: 0;
+  position: relative;
+}
+
+// Medicare Hero
+.hero-medicare {
+  background: url("http://www.regence.com/medicare/images/homebox-bg.jpg") no-repeat #5A8396;
+
+  h1 {
+    color: @white;
+    font-size: 40px;
+    line-height: 40px;
+
+    small {
+      color: @white;
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+  .hero-inner {
+    height: 120px;
+    padding-left: 365px;
+    padding-top: 30px;
+  }
+}
+
+// Button Containers
+.btn-container-bottom {
+  padding-bottom: 40px;
+  position: relative;
+
+  .btn {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+}

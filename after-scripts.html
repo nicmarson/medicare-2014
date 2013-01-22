@@ -1,0 +1,51 @@
+  <script type="text/javascript">
+    // Set the plancode
+    var pCode = '<c:out value="${planCode}" />';
+    function MM_jumpMenu(targ,selObj,restore){ //v3.0
+      eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+      if (restore) selObj.selectedIndex=0;
+    }
+
+    <c:choose>
+      <c:when test="${planCode == 'AS'}"></c:when>
+      <c:otherwise>
+        var oo_feedback = new OOo.Ocode({});
+        var testing = "ok";
+      </c:otherwise>
+    </c:choose>
+    
+  </script>
+
+  <!-- START OF SmartSource Data Collector TAG -->
+  <!-- Copyright (c) 1996-2009 WebTrends Inc.  All rights reserved. -->
+  <!-- Version: 8.6.2 -->
+  <!-- Tag Builder Version: 3.0  -->
+  <!-- Created: 5/29/2009 1:44:43 AM -->
+
+  <!-- ----------------------------------------------------------------------------------- -->
+  <!-- Warning: The two script blocks below must remain inline. Moving them to an external -->
+  <!-- JavaScript include file can cause serious problems with cross-domain tracking.      -->
+  <!-- ----------------------------------------------------------------------------------- -->
+  <script type="text/javascript">
+    //<![CDATA[
+    if (typeof(WebTrends) != "undefined") {
+      var _tag=new WebTrends();
+      _tag.dcsGetId();
+    } else {
+      //console.log("Webtrends undefined");
+    }
+    //]]>>
+  </script>
+  <script type="text/javascript">
+    //<![CDATA[
+    // Add custom parameters here.
+    //_tag.DCSext.param_name=param_value;
+    if (typeof(WebTrends) != "undefined") {
+      _tag.dcsCollect();
+    }
+    //]]>>
+  </script>
+  <noscript>
+    <div><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://devsdc.regence.com/dcsv5fv9m100000o6hkck1kxj_6e9b/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.6.2"/></div>
+  </noscript>
+  <!-- END OF SmartSource Data Collector TAG -->
