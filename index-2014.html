@@ -37,7 +37,7 @@
 
       <nav class="toplevel clearfix">
         <ul class="accessibility nav visuallyhidden">
-          <li><a href="#content" accesskey="2">Skip to Content</a></li>
+          <li><a href="#hero" accesskey="2">Skip to Content</a></li>
           <li><a href="#nav" accesskey="3">Skip to Navigation</a></li>
           <li><a href="/" accesskey="4">Return to Homepage</a></li>
         </ul>
@@ -70,7 +70,8 @@
                 <c:set var="searchCollection" scope="session" value="all" />
               </c:if>
                 <form class="form-search" action="http://www.regence.com/about/search.jsp" method="get" name="header-search" id="search">
-                  <input type="text" value="" id="searchQuery" name="query" placeholder="Search" class="input-medium search-query">
+                  <label for="query" class="hide">Search</label>
+                  <input type="text" id="searchQuery" name="query" placeholder="Search" class="input-medium search-query">
                   <input type="hidden" name="collection" id="searchCollection" value="dotCom_<c:out value='${searchCollection}'/>" />
                   <button type="submit" class="btn">Go</button>
                 </form>
@@ -80,7 +81,7 @@
         </ul>
       </nav>
 
-      <nav class="navbar">
+      <nav class="navbar" id="nav">
         <div class="navbar-inner">
           <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -159,7 +160,7 @@
         <li class="pull-right">Sales <strong>888-734-3623</strong> <span class="divider">/</span> Members <strong>800-541-8981</strong></li>
       </ul>
 
-      <div class="hero-unit hero-image hero-medicare">
+      <div class="hero-unit hero-image hero-medicare" id="hero">
         <div class="hero-inner">
           <h1>Medicare options <br /><small>that are right for you!</small></h1>
         </div>
@@ -213,7 +214,7 @@
 
               <li>New! <c:out value="${silverSneakersPDF}" escapeXml="false"/></li>
             </ul>
-            <p><a href="#planLocations" role="button" class="btn" data-toggle="modal">Where are these plans available?</a></p>
+            <p><a href="#planLocations" data-toggle="modal">Where are these plans available?</a></p>
             <div id="planLocations" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -239,7 +240,7 @@
               <input type="hidden" name="type" value="MA" />
               <input type="hidden" name="contactid" value="9812" />
               <input type="hidden" name="zip" value="<c:if test="${!empty zipCode}"><c:out value="${zipCode}" /></c:if>" />
-              <button type="submit" class="btn btn-large btn-primary" id="beginShopButton1">Begin Shopping</button>
+              <button type="submit" class="btn btn-large btn-positioned btn-primary" id="beginShopButton1">Begin Shopping</button>
             </form>
           </div>
 
@@ -251,14 +252,14 @@
               <li>Covers all classifications of<br />Medicare-approved prescription drugs</li>
             </ul>
             <!-- Uncomment this element for Production -->
-            <form name="healthplanquote" action="<c:out value="${partDpath}" />" method="GET">
+            <form name="healthplanquote" action="<c:out value='${partDpath}' />" method="GET">
             <!-- Uncomment this element for Testing -->
             <!-- <form name="healthplanquote" action="<c:out value="${partDqapath}" />" method="GET" class="bottom"> -->
-              <input type="hidden" name="allid" value="<c:out value="${partDcode}" />" />
+              <input type="hidden" name="allid" value="<c:out value='${partDcode}' />" />
               <input type="hidden" name="type" value="MD" />
               <input type="hidden" name="contactid" value="9812" />
-              <input type="hidden" name="zip" value="<c:if test="${!empty zipCode}"><c:out value="${zipCode}" /></c:if>" />
-              <button type="submit" class="btn btn-large btn-primary" id="beginShopButton2">Begin Shopping</button>
+              <input type="hidden" name="zip" value="<c:if test='${!empty zipCode}'><c:out value='${zipCode}' /></c:if>" />
+              <button type="submit" class="btn btn-large btn-positioned btn-primary" id="beginShopButton2">Begin Shopping</button>
             </form>
           </div>
 
@@ -269,7 +270,7 @@
               <li>Protects you from high out-of-pocket expenses</li>
               <li>Provides freedom from network restrictions or specialist referrals</li>
             </ul>
-            <a href="/medicare/medigap/index.jsp" button="View Medigap" class="btn btn-large btn-primary">Begin Shopping</a>
+            <a href="/medicare/medigap/index.jsp" button="View Medigap" class="btn btn-large btn-positioned btn-primary">Begin Shopping</a>
           </div>
         </div>
 
@@ -281,7 +282,7 @@
         <div class="span4">
           <h3>Request Plan Information</h3>
           <div class="media">
-            <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-envelope.png"></a>
+            <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-envelope.png" alt="Envelope Icons"></a>
             <div class="media-body">
               <p>Contact us to receive information about our plans via email, postal mail, or telephone.<br><a href="/individual/modals/requestInfo.jsp?stcd=OR&amp;type=medicare&amp;height=650&amp;width=610" class="useColorBox cboxElement" width="610" height="650">Fill out the form »</a></p>
             </div>
@@ -298,7 +299,7 @@
         <div class="span4">
           <h3>Attend a Meeting</h3>
           <div class="media">
-            <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-users.png"></a>
+            <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-users.png" alt="Users Icon"></a>
             <div class="media-body">
               <p>See a schedule of our helpful Medicare meetings.</p>
               <c:out value="${medAdvSeminar}" escapeXml="false"/>
@@ -309,7 +310,7 @@
         <div class="span4">
           <h3>Part D Formulary Search</h3>
           <div class="media">
-            <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-rx.png"></a>
+            <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-rx.png" alt="Prescription Icon"></a>
             <div class="media-body">
               <p>Check our formulary to verify that your prescription drugs are covered.</p>
               <div><a href="http://client.formularynavigator.com/Search.aspx?siteCode=5380011701" class="external-site">Online Drug Search »</a></div>
@@ -344,7 +345,7 @@
             </ul>
           </div>
 
-        <c:set var="medAdvProvDir" scope="page">
+        <!-- <c:set var="medAdvProvDir" scope="page">
           <c:if test="${planarea == 'ID'}">
             <a href="/docs/ID/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
@@ -360,7 +361,7 @@
           <c:if test="${planCode == 'WARBS'}">
             <a href="/docs/WA/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
-        </c:set>
+        </c:set> -->
 
           <div id="provDirLinks">
             <h3>Regence Medicare Advantage (PPO) Provider Directory</h3>
@@ -407,7 +408,7 @@
           <h4>Need Coverage?</h4>
           <p>We're available Monday through Friday, 8:00&nbsp;a.m. - 5:00&nbsp;p.m. Call us:<br/>
           <strong>1 (888) 734-3623 </strong> (TTY users call 711)</p>
-          <p>Foreign language interpreters are available. <a href="/docs/medicare2013/multi-language-insert.pdf">Learn more</a> &raquo;</p>
+          <p>Foreign language interpreters are available. <a href="/docs/medicare2013/multi-language-insert.pdf">Learn more &raquo;</a></p>
           
           <h4>Members</h4>
           <p>Our telephone hours are 8:00 a.m. to 8:00 p.m. Monday through Friday. From October 1 through February 14, Customer Service is available from 8:00&nbsp;a.m. to 8:00&nbsp;p.m., seven days a week.</p>
@@ -420,17 +421,17 @@
 
           <div id="newsletter">
             <h4 class="ptn pbs rightinfobox-title mtn mbs">Medicare Member Newsletter</h4>
-            <p>Read  our member newsletter.</p>
 
-          <c:set var="mbrNewsFall" scope="page">
+          <!-- <c:set var="mbrNewsFall" scope="page">
             <c:if test="${planarea == 'ID'}">/docs/ID/medicare2013/member-news-fall-2012.pdf</c:if>
             <c:if test="${planarea == 'IDLOW'}">/docs/IDLOW/medicare2013/member-news-fall-2012.pdf</c:if>
             <c:if test="${planCode == 'OR'}">/docs/OR/medicare2013/member-news-fall-2012.pdf</c:if> 
             <c:if test="${planCode == 'UT'}">/docs/UT/medicare2013/member-news-fall-2012.pdf</c:if> 
             <c:if test="${planCode == 'WARBS'}">/docs/WA/medicare2013/member-news-fall-2012.pdf</c:if>    
-          </c:set>
+          </c:set> -->
 
             <form name="mbrNews" id="form">
+              <label for="jumpMenu">Read our member newsletter</label>
               <select name="jumpMenu" id="jumpMenu">
                 <option disabled selected>Click to Select</option>
                 <option value="${mbrNewsFall}">FALL 2012 (PDF)</option>
@@ -479,7 +480,7 @@
               <li><a href="/about/contactUs.jsp" title="Contact Us">Contact Us</a></li>
               <li><a href="http://news.regence.com" title="News">News</a></li>
               <li><a href="/careers/index.jsp" title="Careers">Careers</a></li>
-              <li><a href="javascript:void(0);" onClick="oo_feedback.show()"><img src="/opinionlab/oo_icon_000.gif" border="0" title="Feedback"> Feedback</a></li>
+              <li><a href="javascript:void(0);" onClick="oo_feedback.show()"><img src="/opinionlab/oo_icon_000.gif" border="0" alt="Feedback"> Feedback</a></li>
               <li><a href="/about/sitemap.jsp" title="Site Map">Site Map</a></li>
               <li><a href="/legal/ethics-and-compliance.jsp" title="Ethics">Ethics</a></li>
               <li><a href="/legal/privacy-terms-of-use.jsp" title="Privacy">Privacy</a></li>
