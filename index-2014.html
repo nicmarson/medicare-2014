@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<tiles:insertTemplate template="newinclude/javaheader.jsp"/> -->
+
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -15,6 +22,10 @@
     <link rel="stylesheet" href="css/main.css">
 
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script>
+      // Set the plancode
+      var pCode = '<c:out value="${planCode}" />';
+    </script>
   </head>
   <body>
     
@@ -31,20 +42,36 @@
           <li><a href="/" accesskey="4">Return to Homepage</a></li>
         </ul>
         <ul class="nav network clearfix">
-          <li class="current"><a href="https://www.regence.com/index.jsp" style="border: medium none;"><img title="Jump to the front page" alt="Regence is an Independent Licensee of the Blue Cross and Blue Shield Association." src="https://www.regence.com/individual/images/logo.gif"></a></li>
+          <li class="current" role="banner">
+            <a href="https://www.regence.com/index.jsp" style="border: medium none;"><img title="Jump to the front page" alt="Regence is an Independent Licensee of the Blue Cross and Blue Shield Association." src="https://www.regence.com/individual/images/logo.gif"></a>
+            <!-- <a href="<c:out value="${stateURL}" />" title="<c:out value="${altDescription}"/>" accesskey="1"><img id="logo" src="/individual/images/logo<c:out value="${planCode}"/>.gif" alt="<c:out value="${altDescription}"/>" /></a> -->
+          </li>
           <li class="nav-utility">
             <ul class="breadcrumb">
-              <li><a title="Home" href="/index.jsp">Home</a> <span class="divider">/</span></li>
-              <li><a title="en Español" href="/espanol/index.jsp">en Español</a></li>
+              <li><a href="/index.jsp">Home</a> <span class="divider">/</span></li>
+              <li><a href="/espanol/index.jsp">en Espa&ntilde;ol</a></li>
             </ul>
           </li>
           <li class="nav-help">
             <ul class="breadcrumb">
               <li>Need Assistance? <a href="/about/contactUs.jsp"> Contact Us</a></li>
               <li>
+              <c:choose>
+                <c:when test="${planCode eq 'WARBS' || planCode eq 'BOEING'}">
+                  <c:set var="searchCollection" scope="session" value="wa" />
+                </c:when>
+                <c:otherwise>
+                  <c:set var="searchCollection" scope="session">
+                    <c:out value="${fn:toLowerCase(planCode)}"/>
+                  </c:set>
+                </c:otherwise>
+              </c:choose>
+              <c:if test="${empty planCode}">
+                <c:set var="searchCollection" scope="session" value="all" />
+              </c:if>
                 <form class="form-search" action="http://www.regence.com/about/search.jsp" method="get" name="header-search" id="search">
                   <input type="text" value="" id="searchQuery" name="query" placeholder="Search" class="input-medium search-query">
-                  <input type="hidden" value="dotCom_all" id="searchCollection" name="collection">
+                  <input type="hidden" name="collection" id="searchCollection" value="dotCom_<c:out value='${searchCollection}'/>" />
                   <button type="submit" class="btn">Go</button>
                 </form>
               </li>
@@ -138,10 +165,10 @@
         </div>
       </div>
       
-      <c:set var="partDaffiliate" scope="page">
+      <!-- <c:set var="partDaffiliate" scope="page">
         <c:if test="${planCode == 'ID' || planCode == 'UT'}"><a href="/medicare/script/index-2013.html">Medicare Script Part D</a></c:if>
         <c:if test="${planCode == 'OR' || planCode == 'WARBS'}"><a class="external-site" href="http://www.asuris.com/medicareScript/2013/index.html">Medicare Script Part D</a></c:if> 
-      </c:set>
+      </c:set> -->
       <c:choose>
         <c:when test="${planCode == 'OR' || planCode == 'WARBS'}">
           <c:set var="partDcode" scope="page" value="reg31863"/>
@@ -186,18 +213,23 @@
 
               <li>New! <c:out value="${silverSneakersPDF}" escapeXml="false"/></li>
             </ul>
-            <p><a href="#">Where are these plans available?</a></p>
-            <c:set var="medAdvSvcAreas" scope="page">
-              <c:if test="${planarea == 'ID'}">Bannock, Benewah, Bingham, Bonner, Bonneville, Boundary, Clark, Elmore, Fremont, Gooding, Jefferson, Kootenai, Latah, Madison, Minidoka, Nez Perce, Payette, Power, Shoshone, Teton and Twin Falls Counties in Idaho, and Asotin County in Washington.</c:if>
-                                <c:if test="${planarea == 'IDLOW'}">Ada, Boise, Canyon, Gem and Owyhee Counties in Idaho.</c:if>
-              <c:if test="${planCode == 'OR'}">Benton, Clackamas, Clatsop, Columbia, Coos, Curry, Douglas, Hood River, Jackson, Josephine, Lane, Lincoln, Linn, Marion, Multnomah, Polk, Tillamook, Wasco, Washington, Yamhill counties in Oregon and Clark County in Washington.</c:if>
-              <c:if test="${planCode == 'UT'}">Box Elder, Cache, Davis, Iron, Morgan, Rich, Salt Lake, Summit, Tooele, Utah, Wasatch, Washington and Weber counties in Utah.</c:if>
-              <c:if test="${planCode == 'WARBS'}">Clallam, Columbia, Cowlitz, Island, King, Kitsap, Klickitat, Lewis, Pierce, San Juan, Skagit, Skamania, Snohomish, Thurston, Wahkiakum, Walla Walla, Whatcom and Yakima counties.</c:if>
-            </c:set>
-            <div class="servicearea">
-              <div class="close">X</div>
-              <strong>Regence Medicare Advantage service area includes: </strong><br />
-              <div class="text"><c:out value="${medAdvSvcAreas}"/></div>
+            <p><a href="#planLocations" role="button" class="btn" data-toggle="modal">Where are these plans available?</a></p>
+            <div id="planLocations" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Plan Locations</h3>
+              </div>
+              <div class="modal-body">
+                <p><strong>Regence Medicare Advantage service area includes: </strong><br />
+              <c:set var="medAdvSvcAreas" scope="page">
+                <c:if test="${planarea == 'ID'}">Bannock, Benewah, Bingham, Bonner, Bonneville, Boundary, Clark, Elmore, Fremont, Gooding, Jefferson, Kootenai, Latah, Madison, Minidoka, Nez Perce, Payette, Power, Shoshone, Teton and Twin Falls Counties in Idaho, and Asotin County in Washington.</c:if>
+                <c:if test="${planarea == 'IDLOW'}">Ada, Boise, Canyon, Gem and Owyhee Counties in Idaho.</c:if>
+                <c:if test="${planCode == 'OR'}">Benton, Clackamas, Clatsop, Columbia, Coos, Curry, Douglas, Hood River, Jackson, Josephine, Lane, Lincoln, Linn, Marion, Multnomah, Polk, Tillamook, Wasco, Washington, Yamhill counties in Oregon and Clark County in Washington.</c:if>
+                <c:if test="${planCode == 'UT'}">Box Elder, Cache, Davis, Iron, Morgan, Rich, Salt Lake, Summit, Tooele, Utah, Wasatch, Washington and Weber counties in Utah.</c:if>
+                <c:if test="${planCode == 'WARBS'}">Clallam, Columbia, Cowlitz, Island, King, Kitsap, Klickitat, Lewis, Pierce, San Juan, Skagit, Skamania, Snohomish, Thurston, Wahkiakum, Walla Walla, Whatcom and Yakima counties.</c:if>
+              </c:set>
+                <c:out value="${medAdvSvcAreas}"/></p>
+              </div>
             </div>
             <!-- Uncomment this element for Production -->
             <form name="healthplanquote" action="https://regence.inshealth.com/ehi/medicare/census" method="GET">
@@ -237,7 +269,7 @@
               <li>Protects you from high out-of-pocket expenses</li>
               <li>Provides freedom from network restrictions or specialist referrals</li>
             </ul>
-            <a href="/medicare/medigap/index.jsp" title="Demographics" button="View Medigap" class="btn btn-large btn-primary">Begin Shopping</a>
+            <a href="/medicare/medigap/index.jsp" button="View Medigap" class="btn btn-large btn-primary">Begin Shopping</a>
           </div>
         </div>
 
@@ -251,7 +283,7 @@
           <div class="media">
             <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-envelope.png"></a>
             <div class="media-body">
-              <p>Contact us to receive information about our plans via email, postal mail, or telephone.<br><a href="/individual/modals/requestInfo.jsp?stcd=OR&amp;type=medicare&amp;height=650&amp;width=610" class="useColorBox cboxElement" title="Request Information" width="610" height="650">Fill out the form »</a></p>
+              <p>Contact us to receive information about our plans via email, postal mail, or telephone.<br><a href="/individual/modals/requestInfo.jsp?stcd=OR&amp;type=medicare&amp;height=650&amp;width=610" class="useColorBox cboxElement" width="610" height="650">Fill out the form »</a></p>
             </div>
           </div>
         </div>
@@ -314,19 +346,19 @@
 
         <c:set var="medAdvProvDir" scope="page">
           <c:if test="${planarea == 'ID'}">
-            <a href="/docs/ID/medicare2013/medadvantage-provider-directory.pdf" title="Regence Medicare Advantage">provider directory (PDF)</a>
+            <a href="/docs/ID/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
           <c:if test="${planarea == 'IDLOW'}">
-            <a href="/docs/IDLOW/medicare2013/medadvantage-provider-directory.pdf" title="Regence Medicare Advantage">provider directory (PDF)</a>
+            <a href="/docs/IDLOW/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
           <c:if test="${planCode == 'OR'}">
-            <a href="/docs/OR/medicare2013/medadvantage-provider-directory.pdf" title="Regence Medicare Advantage">provider directory (PDF)</a>
+            <a href="/docs/OR/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
           <c:if test="${planCode == 'UT'}">
-            <a href="/docs/UT/medicare2013/medadvantage-provider-directory.pdf" title="Regence Medicare Advantage">provider directory (PDF)</a>
+            <a href="/docs/UT/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
           <c:if test="${planCode == 'WARBS'}">
-            <a href="/docs/WA/medicare2013/medadvantage-provider-directory.pdf" title="Regence Medicare Advantage">provider directory (PDF)</a>
+            <a href="/docs/WA/medicare2013/medadvantage-provider-directory.pdf">provider directory (PDF)</a>
           </c:if>
         </c:set>
 
@@ -381,7 +413,7 @@
           <p>Our telephone hours are 8:00 a.m. to 8:00 p.m. Monday through Friday. From October 1 through February 14, Customer Service is available from 8:00&nbsp;a.m. to 8:00&nbsp;p.m., seven days a week.</p>
           <p><strong>1 (800) 541-8981</strong> (TTY users call 711)</p>
           <p>View member benefit information:</p>
-          <ul class="bulleted">
+          <ul>
             <li><a href="members-2012.jsp">Through December 31, 2012 &raquo;</a><br></li>
             <li><a href="members-2013.jsp">January 1, 2013 and beyond</strong> &raquo;</a></li>
           </ul>
@@ -433,7 +465,7 @@
   </c:choose>
 
       <section>
-        <p class="cmsNumber">Note: To print a PDF document, you need Adobe&reg; Acrobat&reg; Reader. <a href="http://www.adobe.com/products/acrobat/readstep2.html">Download it now for free</a>.&nbsp;</p>
+        <div class="alert alert-info">Note: To print a PDF document, you need Adobe&reg; Acrobat&reg; Reader. <a href="http://www.adobe.com/products/acrobat/readstep2.html">Download it now for free</a>.</div>
         <p class="cmsNumber"><em>Last updated 12/14/2012</em><br>
         Y0062_2013_V3_MEDICARE_GENERAL Approved</p>
       </section>
@@ -471,13 +503,11 @@
 
 
 
-    <!-- Shared tools and common items -->
+    <!-- Old Scripts -->
     <script type="text/javascript" src="/medicare/js/global.js"></script>
     <script type="text/javascript" src="/medicare/js/modal.js"></script>
     <script type="text/javascript" src="/medicare/js/menu.js"></script>
     <script type="text/javascript" src="/individual/js/agent.js"></script>
-
-    <!-- Scripts load here as a Yslow recommended best practice (for non-blocking requests) -->
     <script type="text/javascript" src="/individual/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="/medicare/js/jquery-ui-1.7.1.custom.min.js"></script>
     <script type="text/javascript" src='/medicare/js/jquery.cookie.min.js'></script>
@@ -491,7 +521,7 @@
     <script type="text/javascript" src='/opinionlab/oo_engine.min.js'></script><!-- Opinion Lab -->
     <script type="text/javascript" src="/medicare/js/modal.js"></script>
     <script type="text/javascript" src="/individual/js/demographics.js"></script>
-
+    <!-- Old Scripts -->
 
 
 
