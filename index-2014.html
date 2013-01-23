@@ -239,7 +239,7 @@
               <input type="hidden" name="allid" value="reg30527" />
               <input type="hidden" name="type" value="MA" />
               <input type="hidden" name="contactid" value="9812" />
-              <input type="hidden" name="zip" value="<c:if test="${!empty zipCode}"><c:out value="${zipCode}" /></c:if>" />
+              <input type="hidden" name="zip" value="<c:if test='${!empty zipCode}'><c:out value='${zipCode}' /></c:if>" />
               <button type="submit" class="btn btn-large btn-positioned btn-primary" id="beginShopButton1">Begin Shopping</button>
             </form>
           </div>
@@ -277,7 +277,7 @@
       </div>
 
       <h2><button type="button" class="btn btn-block btn-large" data-toggle="collapse" data-target="#medicaretools">Request information, find a meeting near you and search our formulary <b class="caret"></b></button></h2>
-      <div class="collapse in row" id="medicaretools">
+      <div class="collapse row" id="medicaretools">
 
         <div class="span4">
           <h3>Request Plan Information</h3>
@@ -321,7 +321,7 @@
       </div>
 
       <h2><button type="button" class="btn btn-block btn-large" data-toggle="collapse" data-target="#bulletedContent">Important Information <b class="caret"></b></button></h2>
-      <article class="collapse in row" id="bulletedContent">
+      <article class="collapse row" id="bulletedContent">
 
         <section class="span8">
 

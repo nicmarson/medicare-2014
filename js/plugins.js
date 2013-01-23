@@ -45,3 +45,13 @@ var currentTallest = 0,
    }
    
  });
+
+$(function() {
+  
+  $(".btn-container-bottom .btn-positioned").css({
+    bottom: 0,
+    left: 0,
+    position: "absolute"
+  });
+
+});
