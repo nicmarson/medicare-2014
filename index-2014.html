@@ -1,6 +1,111 @@
 <!DOCTYPE HTML>
+
+
+
+
+
+
+
+
+
+
 <!-- CVS Version - $Id: RegionalCookieManagerTag.java,v 1.1 2009/07/07 18:24:08 r619812 Exp $ -->
+
+  
+  
+  
+  
+  
+  
 <!-- PLANCODE = null -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -30,6 +135,12 @@
 
     <div class="container">
 
+    
+      
+
+      
+
+
 <nav class="toplevel clearfix" id="toplevel">
   <ul class="accessibility nav visuallyhidden">
     <li><a href="#hero" accesskey="2">Skip to Content</a></li>
@@ -50,6 +161,15 @@
       <ul class="breadcrumb">
         <li>Need Assistance? <a href="/about/contactUs.jsp"> Contact Us</a></li>
         <li>
+        
+          
+          
+            
+          
+        
+        
+          
+        
           <form class="form-search" action="http://www.regence.com/about/search.jsp" method="get" name="header-search" id="search">
             <label for="searchQuery" class="hide">Search</label>
             <input type="text" id="searchQuery" name="searchQuery" placeholder="Search" class="input-medium search-query">
@@ -61,6 +181,8 @@
     </li>
   </ul>
 </nav>
+      
+
 
 <nav class="navbar" id="nav">
   <div class="navbar-inner">
@@ -131,6 +253,9 @@
     </div>
   </div>
 </nav>
+      
+
+
 
 <div id="demographics">
 
@@ -139,17 +264,63 @@
       
       No ZIP Code
     
-    (<a href="#enh_demographics" data-toggle="modal">Edit</a>)</li>
+    (<a href="#demographicsModal" data-toggle="modal">Edit</a>)</li>
     <li class="pull-right">Sales <strong>888-734-3623</strong> <span class="divider">/</span> Members <strong>800-541-8981</strong></li>
   </ul>
 
-  <div id="enh_demographics" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="demographics" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 id="myModalLabel">Your demographics</h3>
-    </div>
-    <div class="modal-body">
-      <form id="getQuoteForm" class="validateMe" method="get">
+  
+
+
+
+<div id="demographicsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="demographicsModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="demographicsModalLabel">Your demographics</h3>
+  </div>
+  <div class="modal-body">
+    <form id="getQuoteForm" class="validateMe" method="get">
+
+      <label>Zip Code</label>
+      <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
+      <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
+
+      <div class="county">
+        <label>Select your county</label>
+        <select id="counties" name="county" class="textbox">
+          <option id="default" value=''>Please Select...</option>
+        </select>
+        <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
+      </div>
+
+      <fieldset>
+        <legend>How can we help you?</legend>
+        <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
+        I'm looking for coverage</label>    
+        <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
+        View <strong>2012</strong> member information</label>
+        <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
+        View <strong>2013</strong> member information</label>
+      </fieldset>
+          
+      <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
+      <span class="checkboxText">I am Medicare eligible</span></label>    
+
+      <!-- hidden fields -->
+      <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
+      <input class="ignore" id="state" name="state" value="" type="hidden" />
+      <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
+      <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
+      <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
+      <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
+      <input class="ignore" value='unknown' name='plantype' type="hidden"  />
+      <input class="ignore" value='' name='fromFile' type="hidden"  />
+      <input class="ignore" id="gender" value='m' name='g0' type="hidden"  />
+      <input class="ignore" value='s' name='r0' type="hidden"  />
+      <input class="ignore" value='off' name='t0' type="hidden"  />
+      <input class="ignore" type='hidden' name='fromFile' value='index'/>
+
+      <!--MedAdvantage Form-->
+      <div id="medAdvantageForm" class="fieldset_remove" style="display:none;">
 
         <label>Zip Code</label>
         <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
@@ -168,13 +339,13 @@
           <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
           I'm looking for coverage</label>    
           <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
-          View <strong>2012</strong> member information</label>
+          View <strong>2012</strong> member information</label>    
           <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
-          View <strong>2013</strong> member information</label>
+          >View <strong>2013</strong> member information</label>
         </fieldset>
             
         <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-        <span class="checkboxText">I am Medicare eligible</span></label>    
+        <span class="checkboxText">I am Medicare eligible</span></label>
 
         <!-- hidden fields -->
         <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
@@ -183,160 +354,118 @@
         <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
         <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
         <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
-        <input class="ignore" value='unknown' name='plantype' type="hidden"  />
+        <input class="ignore" value='medadvantage' name='plantype' type="hidden"  />
         <input class="ignore" value='' name='fromFile' type="hidden"  />
         <input class="ignore" id="gender" value='m' name='g0' type="hidden"  />
         <input class="ignore" value='s' name='r0' type="hidden"  />
         <input class="ignore" value='off' name='t0' type="hidden"  />
-        <input class="ignore" type='hidden' name='fromFile' value='index'/>
+        <input class="ignore" type='hidden' name='fromFile' value=''/>
 
-        <!--MedAdvantage Form-->
-        <div id="medAdvantageForm" class="fieldset_remove" style="display:none;">
+      </div>
 
-          <label>Zip Code</label>
-          <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-          <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
+      <!--Part-D Form-->
+      <div id="partDForm" class="fieldset_remove" style="display:none;">
 
-          <div class="county">
-            <label>Select your county</label>
-            <select id="counties" name="county" class="textbox">
-              <option id="default" value=''>Please Select...</option>
-            </select>
-            <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
-          </div>
+        <label>Zip Code</label>
+        <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
+        <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
 
-          <fieldset>
-            <legend>How can we help you?</legend>
-            <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
-            I'm looking for coverage</label>    
-            <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
-            View <strong>2012</strong> member information</label>    
-            <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
-            >View <strong>2013</strong> member information</label>
-          </fieldset>
-              
-          <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-          <span class="checkboxText">I am Medicare eligible</span></label>
-
-          <!-- hidden fields -->
-          <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
-          <input class="ignore" id="state" name="state" value="" type="hidden" />
-          <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
-          <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
-          <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
-          <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
-          <input class="ignore" value='medadvantage' name='plantype' type="hidden"  />
-          <input class="ignore" value='' name='fromFile' type="hidden"  />
-          <input class="ignore" id="gender" value='m' name='g0' type="hidden"  />
-          <input class="ignore" value='s' name='r0' type="hidden"  />
-          <input class="ignore" value='off' name='t0' type="hidden"  />
-          <input class="ignore" type='hidden' name='fromFile' value=''/>
-
-        </div>
-
-        <!--Part-D Form-->
-        <div id="partDForm" class="fieldset_remove" style="display:none;">
-
-          <label>Zip Code</label>
-          <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-          <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
-
-          <div class="county">
-            <label>Select your county</label>
-            <select id="counties" name="county" class="textbox">
-              <option id="default" value=''>Please Select...</option>
-            </select>
-            <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
-          </div>
-
-          <fieldset>
-            <legend>How can we help you?</legend>
-            <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
-            I'm looking for coverage</label>    
-            <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
-            View <strong>2012</strong> member information</label>    
-            <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
-            View <strong>2013</strong> member information</label>
-          </fieldset>
-              
-          <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-          <span class="checkboxText">I am Medicare eligible</span></label>    
-
-          <!-- hidden fields -->  
-          <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
-          <input class="ignore" id="state" name="state" value="" type="hidden" />
-          <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
-          <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
-          <input class="ignore" id="alreadyMedicare" name="onMedicare" type="hidden" value='on'/>
-          <input class="ignore" value="" name="id" id="productID" type="hidden" />
-          <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
-          <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
-          <input class="ignore" value='partd' name='plantype' type="hidden"  />
-          <input class="ignore" value='' name='fromFile' type="hidden"  />
-          <input class="ignore" value='s' name='r0' type="hidden"  />
-          <input class="ignore" value='off' name='t0' type="hidden"  />
-          <input class="ignore" type='hidden' name='fromFile' value=''/>
-        </div>
-
-        <!--Medigap Form-->
-        <div id="medigapForm" class="fieldset_remove" style="display:none;">
-
-          <label>Zip Code</label>
-          <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-          <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
-
-          <div class="county">
-            <label>Select your county</label>
-            <select id="counties" name="county" class="textbox">
-              <option id="default" value=''>Please Select...</option>
-            </select>
-            <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
-          </div>
-
-          <label>Age</label>
-          <input id="age" name="a0" class="textbox" value="0" size="2" maxlength="3" type="text" />
-
-          <label>Gender</label>
-          <select id='gender' name='g0' class="textbox select_gender">
-            <option value=''></option>
-            <option value='m'>Male</option>
-            <option value='f'>Female</option>
+        <div class="county">
+          <label>Select your county</label>
+          <select id="counties" name="county" class="textbox">
+            <option id="default" value=''>Please Select...</option>
           </select>
-
-          <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-          I am already on Medicare Part A/B</label>
-
-          <!-- hidden fields -->
-          <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
-          <input class="ignore" id="state" name="state" value="" type="hidden" />
-          <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
-          <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
-          <input class="ignore" value="" name="id" id="productID" type="hidden" />
-          <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
-          <input class="ignore" value='medigap' name='plantype' type="hidden"  />
-          <input class="ignore" value='' name='fromFile' type="hidden"  />
-          <input class="ignore" value='s' name='r0' type="hidden"  />
-          <input class="ignore" value='off' name='t0' type="hidden"  />
-          <input class="ignore" type='hidden' name='fromFile' value=''/>
-
+          <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
         </div>
 
-        <!--Button and Form Error Placement-->
-        <label class="checkbox"><input id="rememberMe" name="keepMe" type="checkbox" value="" class="quoteCheckbox"/>
-        <span class="checkboxText">Remember me on this computer</span></label>
+        <fieldset>
+          <legend>How can we help you?</legend>
+          <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
+          I'm looking for coverage</label>    
+          <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
+          View <strong>2012</strong> member information</label>    
+          <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
+          View <strong>2013</strong> member information</label>
+        </fieldset>
+            
+        <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
+        <span class="checkboxText">I am Medicare eligible</span></label>    
 
-        <div class="error_container"></div>
-        <div class='formErrorsDemo'></div>
+        <!-- hidden fields -->  
+        <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
+        <input class="ignore" id="state" name="state" value="" type="hidden" />
+        <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
+        <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
+        <input class="ignore" id="alreadyMedicare" name="onMedicare" type="hidden" value='on'/>
+        <input class="ignore" value="" name="id" id="productID" type="hidden" />
+        <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
+        <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
+        <input class="ignore" value='partd' name='plantype' type="hidden"  />
+        <input class="ignore" value='' name='fromFile' type="hidden"  />
+        <input class="ignore" value='s' name='r0' type="hidden"  />
+        <input class="ignore" value='off' name='t0' type="hidden"  />
+        <input class="ignore" type='hidden' name='fromFile' value=''/>
+      </div>
 
-        <input class="ignore" id="age" name="a0" value="65" size="2" maxlength="3" type="hidden" />
+      <!--Medigap Form-->
+      <div id="medigapForm" class="fieldset_remove" style="display:none;">
 
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-      <button class="btn btn-primary" id="demographicButton">Save changes</button>
-    </div>
+        <label>Zip Code</label>
+        <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
+        <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
+
+        <div class="county">
+          <label>Select your county</label>
+          <select id="counties" name="county" class="textbox">
+            <option id="default" value=''>Please Select...</option>
+          </select>
+          <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
+        </div>
+
+        <label>Age</label>
+        <input id="age" name="a0" class="textbox" value="0" size="2" maxlength="3" type="text" />
+
+        <label>Gender</label>
+        <select id='gender' name='g0' class="textbox select_gender">
+          <option value=''></option>
+          <option value='m'>Male</option>
+          <option value='f'>Female</option>
+        </select>
+
+        <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
+        I am already on Medicare Part A/B</label>
+
+        <!-- hidden fields -->
+        <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
+        <input class="ignore" id="state" name="state" value="" type="hidden" />
+        <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
+        <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
+        <input class="ignore" value="" name="id" id="productID" type="hidden" />
+        <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
+        <input class="ignore" value='medigap' name='plantype' type="hidden"  />
+        <input class="ignore" value='' name='fromFile' type="hidden"  />
+        <input class="ignore" value='s' name='r0' type="hidden"  />
+        <input class="ignore" value='off' name='t0' type="hidden"  />
+        <input class="ignore" type='hidden' name='fromFile' value=''/>
+
+      </div>
+
+      <!--Button and Form Error Placement-->
+      <label class="checkbox"><input id="rememberMe" name="keepMe" type="checkbox" value="" class="quoteCheckbox"/>
+      <span class="checkboxText">Remember me on this computer</span></label>
+
+      <div class="error_container"></div>
+      <div class='formErrorsDemo'></div>
+
+      <input class="ignore" id="age" name="a0" value="65" size="2" maxlength="3" type="hidden" />
+
+    </form>
   </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" id="demographicButton">Save changes</button>
+  </div>
+</div>
 
 </div>
 
@@ -351,6 +480,16 @@
 
 
 <div id="coverage_options">
+      
+  
+  
+    
+    
+      
+      
+      
+    
+  
 
   <h2>2013 Regence Medicare Coverage Options</h2>
 
@@ -363,13 +502,16 @@
           <li>Large national provider network</li>
           <li>Low out-of-pocket costs</li>
           <li>Part D coverage included with selected plans</li>
+    
+        
+
           <li>New! </li>
         </ul>
         <p><a href="#planLocations" data-toggle="modal">Where are these plans available?</a></p>
-        <div id="planLocations" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="planLocations" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="planLocationsLabel" aria-hidden="true">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Plan Locations</h3>
+            <h3 id="planLocationsLabel">Plan Locations</h3>
           </div>
           <div class="modal-body">
             <p><strong>Regence Medicare Advantage service area includes: </strong><br />
@@ -422,6 +564,9 @@
   </div>
   
 </div>
+      
+
+
 
 <h2><button type="button" class="btn btn-block btn-large" data-toggle="collapse" data-target="#medicare_tools">Request information, find a meeting near you and search our formulary <b class="caret"></b></button></h2>
 <div class="collapse row" id="medicare_tools">
@@ -431,7 +576,231 @@
     <div class="media">
       <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-envelope.png" alt="Envelope Icons"></a>
       <div class="media-body">
-        <p>Contact us to receive information about our plans via email, postal mail, or telephone.<br><a href="/individual/modals/requestInfo.jsp?stcd=OR&amp;type=medicare&amp;height=650&amp;width=610" class="useColorBox cboxElement" width="610" height="650">Fill out the form Â»</a></p>
+        <p>Contact us to receive information about our plans via email, postal mail, or telephone.</p>
+        <p><a href="#requestInformation" data-toggle="modal">Fill out the form &raquo;</a><p>
+        
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+  var thisNetwork   = "WARBS";
+  var thisType    = "";
+  var thisEnvironment = "PROD";
+  var lastModified  = "Last Updated:<br />Thursday, January 24, 2013";
+
+  var postValues    = new Object({
+      "to":       'https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8',
+      "oid":        '00D40000000J07v',
+      "lineOfBusiness":   "Under65",
+      "retURL":     document.location.href.replace(/\?.*/,'') + "?action=thankyou"
+    });
+
+  
+    var locationInfo  = new Object({
+        "title"   : "Regence BlueShield of Washington<br />(in select counties)",
+        "address" : "e.g. 1800 9th Ave",
+        "city"    : "Seattle",
+        "state"   : "WA",
+        "zip"   : "98111",
+        "name"    : "washington",
+        "Campaign_ID": "70140000000AIsmAAG",
+        "CampaignMedicare": "70140000000AIsiAAG"
+      });
+  
+  
+  
+  
+  
+  
+
+  // 2010.03.02 KJD: Replace title if medicare
+  if( thisType == 'medicare' ){ locationInfo['title'] = "Info delivered to you";  }
+
+</script>
+
+<form class="form-horizontal" method=post action='about:blank' id='infoForm' onSubmit='return false'>
+  <div id="requestInformation" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="requestInformationLabel" aria-hidden="true">
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="requestInformationLabel">Request information</h3>
+    </div>
+
+    
+
+    <div class="modal-body">
+
+      <h3>Information delivered to you</h3>
+      <p>Details  about our health plans are available on this website, but you may choose to receive information about our plans via email, postal mail or telephone. Fill out this form and we&rsquo;ll contact you within a few business days.</p>
+
+      <fieldset>
+
+        <legend>Your contact information</legend>
+
+        <input type=hidden name="oid" value="">
+        <input type=hidden name="retURL" value="">
+        <input type='hidden' name=lead_source value='Regence Web Sites' />
+        <input type="hidden" name=lineOfBusiness value=""/>   
+        <input type='hidden' name="Campaign_ID" value="" />
+
+        <div class="control-group">
+          <label class="control-label" for='firstname'>First Name<span class='asterisk firstname'>*</span></label>
+          <div class="controls">
+            <input type='text' name=first_name class='required' id='firstname' placeholder="Jane" required>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='lastname'>Last Name<span class='asterisk lastname'>*</span></label>
+          <div class="controls">
+            <input type='text' name=last_name class='required' id='lastname' placeholder="Doe" required>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='preferredMethod'>How do you prefer to be contacted?<span class='asterisk perferredMethod'>*</span></label>
+          <div class="controls">
+            <select id="preferredMethod" name="00N4000000206JU" title="Preferred Communication Method" class='preferredMethod'>
+              <option SELECTED>- SELECT ONE -</option>
+              <option value="Email">Email</option>
+              <option value="Mail">Postal Mail</option>
+              <option value="Phone">Phone</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='address'>Street Address<span class='asterisk address'>*</span></label>
+          <div class="controls">
+            <input type='text' name=street id='address' class='required' placeholder="e.g. 1800 9th Ave" required>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='city'>City<span class='asterisk city'>*</span></label>
+          <div class="controls">
+            <input type='text' name=city id='city' class='required' placeholder="Seattle" required>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='thisState'>State<span class='asterisk state'>*</span></label>
+          <div class="controls">
+            <select name='state' class='required' id='thisState'>
+              <option value='AL'>AL</option>
+              <option value='AK'>AK</option>
+              <option value='AZ'>AZ</option>
+              <option value='AR'>AR</option>
+              <option value='CA'>CA</option>
+              <option value='CO'>CO</option>
+              <option value='CT'>CT</option>
+              <option value='DE'>DE</option>
+              <option value='DC'>DC</option>
+              <option value='FL'>FL</option>
+              <option value='GA'>GA</option>
+              <option value='HI'>HI</option>
+              <option value='ID'>ID</option>
+              <option value='IL'>IL</option>
+              <option value='IN'>IN</option>
+              <option value='IA'>IA</option>
+              <option value='KS'>KS</option>
+              <option value='KY'>KY</option>
+              <option value='LA'>LA</option>
+              <option value='ME'>ME</option>
+              <option value='MD'>MD</option>
+              <option value='MA'>MA</option>
+              <option value='MI'>MI</option>
+              <option value='MN'>MN</option>
+              <option value='MS'>MS</option>
+              <option value='MO'>MO</option>
+              <option value='MT'>MT</option>
+              <option value='NE'>NE</option>
+              <option value='NV'>NV</option>
+              <option value='NH'>NH</option>
+              <option value='NJ'>NJ</option>
+              <option value='NM'>NM</option>
+              <option value='NY'>NY</option>
+              <option value='NC'>NC</option>
+              <option value='ND'>ND</option>
+              <option value='OH'>OH</option>
+              <option value='OK'>OK</option>
+              <option value='OR'>OR</option>
+              <option value='PA'>PA</option>
+              <option value='RI'>RI</option>
+              <option value='SC'>SC</option>
+              <option value='SD'>SD</option>
+              <option value='TN'>TN</option>
+              <option value='TX'>TX</option>
+              <option value='UT'>UT</option>
+              <option value='VT'>VT</option>
+              <option value='VA'>VA</option>
+              <option value='WA'>WA</option>
+              <option value='WV'>WV</option>
+              <option value='WI'>WI</option>
+              <option value='WY'>WY</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='zip'>Zip<span class='asterisk zip'>*</span></label>
+          <div class="controls">
+            <input type='text' name=zip id='zip' class='required' placeholder="97201" required>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='phonenumber'>Phone Number<span class='asterisk phonenumber inactive'>*</span></label>
+          <div class="controls">
+            <input type='text' name=phone id='phonenumber' class='phoneUS' placeholder="(XXX) XXX-XXXX">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for='email'>Email<span class='asterisk email'>*</span></label>
+          <div class="controls">
+            <input type='text' name=email class='required email' id='email' placeholder="none@nowhere.com" required>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <div class="control-group">
+        <div class="controls">
+          <label>Select one or both:</label>
+          <label class="checkbox">
+            <input name="plan" type="checkbox" id="plan" value="medadv">
+            Medicare Advantage Plans
+          </label>
+          <label class="checkbox">
+            <input name="plan2" type="checkbox" id="plan2" value="partd">
+            Medicare Part D Plans
+          </label>
+          <span class="help-block"><em>*Required information</em></span>
+        </div>
+      </div>
+
+      <p><em class="cmsnumber">Last updated 10/01/2012</em><br />
+      Y0062_2013_MEDICARE_ADVANTAGE_AND_SCRIPT Approved</p>
+    </div> <!-- modal-body -->
+
+    
+
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+      <input type="hidden"  name="agentContact" />
+      <input type="hidden"  name="planCode" value="" />
+    </div>
+
+  </div>
+</form>
+
       </div>
     </div>
   </div>
@@ -442,6 +811,7 @@
       <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-users.png" alt="Users Icon"></a>
       <div class="media-body">
         <p>See a schedule of our helpful Medicare meetings.</p>
+      
         
       </div>
     </div>
@@ -453,12 +823,14 @@
       <a class="pull-left" href="#"><img class="media-object" src="https://www.regence.com/medicare/images/tools-rx.png" alt="Prescription Icon"></a>
       <div class="media-body">
         <p>Check our formulary to verify that your prescription drugs are covered.</p>
-        <div><a href="http://client.formularynavigator.com/Search.aspx?siteCode=5380011701" class="external-site">Online Drug Search Â»</a></div>
+        <div><a href="http://client.formularynavigator.com/Search.aspx?siteCode=5380011701" class="external-site">Online Drug Search &raquo;</a></div>
       </div>
     </div>
   </div>
 
 </div>
+      
+
 
 <h2><button type="button" class="btn btn-block btn-large" data-toggle="collapse" data-target="#important_information">Important Information <b class="caret"></b></button></h2>
 <article class="collapse row" id="important_information">
@@ -483,7 +855,9 @@
         <li><a href="/medicare/medigap/index.jsp">Medigap (Medicare Supplement)</a></li>
         <li><a href="/medicare/forms.jsp">Medicare Forms</a></li>
       </ul>
-    </div>  
+    </div>
+
+  
 
     <div id="provDirLinks">
       <h3>Regence Medicare Advantage (PPO) Provider Directory</h3>
@@ -568,11 +942,17 @@
 
 </article>
 
-<section>
+      
+      
+    
+
+      <section>
   <div class="alert alert-info">Note: To print a PDF document, you need Adobe&reg; Acrobat&reg; Reader. <a href="http://www.adobe.com/products/acrobat/readstep2.html">Download it now for free</a>.</div>
   <p class="cmsNumber"><em>Last updated 12/14/2012</em><br>
     Y0062_2013_V3_MEDICARE_GENERAL Approved</p>
 </section>
+      
+
 
 <footer>
   <nav class="navbar">
@@ -590,7 +970,8 @@
       </ul>
     </div>
   </nav>
-  <p>&copy; 2012 The Regence Group</p>  
+  <p>&copy; 2012 The Regence Group</p>
+  
 </footer>
 
     </div> <!-- /container -->
