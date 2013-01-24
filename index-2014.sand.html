@@ -1,0 +1,54 @@
+<!doctype html>
+<html ng-app="plunker">
+  <head>
+   </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.js"></script>
+    <script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.1.0-SNAPSHOT.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+ 
+  <script>
+    angular.module('plunker', ['ui.bootstrap']);
+    function AccordionDemoCtrl($scope) {
+      $scope.oneAtATime = true;
+    
+      $scope.groups = [
+        {
+          title: "Dynamic Group Header - 1",
+          content: "Dynamic Group Body - 1"
+        },
+        {
+          title: "Dynamic Group Header - 2",
+          content: "Dynamic Group Body - 2"
+        }
+      ];
+    
+      $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+    
+      $scope.addItem = function() {
+        $scope.items.push('Item ' + $scope.items.length);
+      };
+    }
+  </script>
+<div ng-controller="AccordionDemoCtrl">
+  <label class="checkbox">
+    <input type="checkbox" ng-model="oneAtATime">
+    Open only one at a time
+  </label>
+
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="Static Header">
+      This content is straight in the template.
+    </accordion-group>
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      {{group.content}}
+    </accordion-group>
+    <accordion-group heading="Dynamic Body Content">
+      <p>The body of the accordion group grows to fit the contents</p>
+        <button class="btn btn-small" ng-click="addItem()">Add Item</button>
+        <div ng-repeat="item in items">{{item}}</div>
+    </accordion-group>
+  </accordion>
+</div>
+  </body>
+</html>
