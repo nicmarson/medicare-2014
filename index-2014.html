@@ -110,7 +110,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head> 
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Regence Medicare</title>
@@ -153,8 +153,8 @@
     </li>
     <li class="nav-utility">
       <ul class="breadcrumb">
-        <li><a href="/index.jsp">Home</a> <span class="divider">/</span></li>
-        <li><a href="/espanol/index.jsp">en Espa&ntilde;ol</a></li>
+        <li>Sales <strong>888-734-3623</strong> <span class="divider">/</span></li>
+        <li>Members <strong>800-541-8981</strong></li>
       </ul>
     </li>
     <li class="nav-help">
@@ -253,26 +253,22 @@
     </div>
   </div>
 </nav>
+      <ul class="breadcrumb">
+        <li><a href="/index.jsp">Home</a> <span class="divider">/</span></li>
+        <li>Medicare</li>
+        <li class="pull-right"><a href="/espanol/index.jsp">en Espa&ntilde;ol</a></li>
+        <li class="pull-right">
+          
+          No ZIP Code
+        
+        (<a href="#demographicsModal" data-toggle="modal">Edit</a>) <span class="divider">/</span></li>        
+      </ul>
+
       
 
 
 
-<div id="demographics">
-
-  <ul class="breadcrumb">
-    <li>
-      
-      No ZIP Code
-    
-    (<a href="#demographicsModal" data-toggle="modal">Edit</a>)</li>
-    <li class="pull-right">Sales <strong>888-734-3623</strong> <span class="divider">/</span> Members <strong>800-541-8981</strong></li>
-  </ul>
-
-  
-
-
-
-<div id="demographicsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="demographicsModalLabel" aria-hidden="true">
+<div id="demographicsModal" class="modal js-hide fade" tabindex="-1" role="dialog" aria-labelledby="demographicsModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="demographicsModalLabel">Your demographics</h3>
@@ -329,8 +325,6 @@
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-primary" id="demographicButton">Save changes</button>
   </div>
-</div>
-
 </div>
 
       <div class="hero-unit hero-image hero-medicare" id="hero">
@@ -410,24 +404,9 @@
           <input type="hidden" name="type" value="MD" />
           <input type="hidden" name="contactid" value="9812" />
           <input type="hidden" name="zip" value="" />
-          <button type="submit" class="btn btn-large btn-positioned btn-primary" id="beginShopButton2"  data-toggle="modal" data-target="#confirmLeaving">Begin Shopping</button>
+          <button type="submit" class="btn btn-large btn-positioned btn-primary" id="beginShopButton2">Begin Shopping</button>
         </form>
       </div>
-
-		<!-- Modal -->
-		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">Modal header</h3>
-		  </div>
-		  <div class="modal-body">
-			<p>You are about to leave the Regence Web site and enter another site that is NOT affiliated with or licensed by the Blue Cross Blue Shield Association.</p>
-		  </div>
-		  <div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			<button class="btn btn-primary">Save changes</button>
-		  </div>
-		</div>
 
       <div class="span4 blocks btn-container btn-container-bottom">
         <h3>Medigap (Medicare Supplement) Plans</h3>
@@ -448,7 +427,7 @@
 
 
 <h2><button type="button" class="btn btn-block btn-large" data-toggle="collapse" data-target="#medicare_tools">Request information, find a meeting near you and search our formulary <b class="caret"></b></button></h2>
-<div class="collapse row" id="medicare_tools">
+<div class="collapse in row" id="medicare_tools">
 
   <div class="span4">
     <h3>Request Plan Information</h3>
@@ -470,7 +449,7 @@
   var thisNetwork   = "WARBS";
   var thisType    = "";
   var thisEnvironment = "PROD";
-  var lastModified  = "Last Updated:<br />Thursday, January 24, 2013";
+  var lastModified  = "Last Updated:<br />Friday, January 25, 2013";
 
   var postValues    = new Object({
       "to":       'https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8',
@@ -503,7 +482,7 @@
 </script>
 
 <form class="form-horizontal" method=post action='about:blank' id='infoForm' onSubmit='return false'>
-  <div id="requestInformation" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="requestInformationLabel" aria-hidden="true">
+  <div id="requestInformation" class="modal js-hide fade" tabindex="-1" role="dialog" aria-labelledby="requestInformationLabel" aria-hidden="true">
 
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -712,7 +691,7 @@
 
 
 <h2><button type="button" class="btn btn-block btn-large" data-toggle="collapse" data-target="#important_information">Important Information <b class="caret"></b></button></h2>
-<article class="collapse row" id="important_information">
+<article class="collapse in row" id="important_information">
 
   <section class="span8">
 
@@ -857,6 +836,9 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script src="js/vendor/angular_bootstrap/ui-bootstrap-tpls-0.1.0-SNAPSHOT.min.js"></script>
+    <script src="js/vendor/angular_bootstrap/assets/plunker.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/plugins.js"></script>
 
