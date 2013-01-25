@@ -280,13 +280,12 @@
   <div class="modal-body">
     <form id="getQuoteForm" class="validateMe" method="get">
 
-      <label>Zip Code</label>
-      <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-      <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
+      <label for="zipCode">Zip Code</label>
+      <input id="zipCode" name="zipCode" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
 
       <div class="county">
-        <label>Select your county</label>
-        <select id="counties" name="county" class="textbox">
+        <label for="counties">Select your county</label>
+        <select id="counties" name="counties" class="textbox">
           <option id="default" value=''>Please Select...</option>
         </select>
         <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
@@ -294,15 +293,15 @@
 
       <fieldset>
         <legend>How can we help you?</legend>
-        <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
+        <label for="coverage2013" class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
         I'm looking for coverage</label>    
-        <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
+        <label for="member2012" class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
         View <strong>2012</strong> member information</label>
-        <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
+        <label for="member2013" class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
         View <strong>2013</strong> member information</label>
       </fieldset>
           
-      <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
+      <label for="onMedicare" class="checkbox"><input id="onMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
       <span class="checkboxText">I am Medicare eligible</span></label>    
 
       <!-- hidden fields -->
@@ -318,146 +317,11 @@
       <input class="ignore" value='s' name='r0' type="hidden"  />
       <input class="ignore" value='off' name='t0' type="hidden"  />
       <input class="ignore" type='hidden' name='fromFile' value='index'/>
-
-      <!--MedAdvantage Form-->
-      <div id="medAdvantageForm" class="fieldset_remove" style="display:none;">
-
-        <label>Zip Code</label>
-        <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-        <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
-
-        <div class="county">
-          <label>Select your county</label>
-          <select id="counties" name="county" class="textbox">
-            <option id="default" value=''>Please Select...</option>
-          </select>
-          <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
-        </div>
-
-        <fieldset>
-          <legend>How can we help you?</legend>
-          <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
-          I'm looking for coverage</label>    
-          <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
-          View <strong>2012</strong> member information</label>    
-          <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
-          >View <strong>2013</strong> member information</label>
-        </fieldset>
-            
-        <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-        <span class="checkboxText">I am Medicare eligible</span></label>
-
-        <!-- hidden fields -->
-        <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
-        <input class="ignore" id="state" name="state" value="" type="hidden" />
-        <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
-        <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
-        <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
-        <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
-        <input class="ignore" value='medadvantage' name='plantype' type="hidden"  />
-        <input class="ignore" value='' name='fromFile' type="hidden"  />
-        <input class="ignore" id="gender" value='m' name='g0' type="hidden"  />
-        <input class="ignore" value='s' name='r0' type="hidden"  />
-        <input class="ignore" value='off' name='t0' type="hidden"  />
-        <input class="ignore" type='hidden' name='fromFile' value=''/>
-
-      </div>
-
-      <!--Part-D Form-->
-      <div id="partDForm" class="fieldset_remove" style="display:none;">
-
-        <label>Zip Code</label>
-        <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-        <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
-
-        <div class="county">
-          <label>Select your county</label>
-          <select id="counties" name="county" class="textbox">
-            <option id="default" value=''>Please Select...</option>
-          </select>
-          <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
-        </div>
-
-        <fieldset>
-          <legend>How can we help you?</legend>
-          <label class="radio"><input id="coverage2013" name="coverage" type="radio" value='index-2013.jsp' class="quoteCheckbox"/>
-          I'm looking for coverage</label>    
-          <label class="radio"><input id="member2012" name="coverage" type="radio" value='members-2012.jsp' class="quoteCheckbox"/>
-          View <strong>2012</strong> member information</label>    
-          <label class="radio"><input id="member2013" name="coverage" type="radio" value='members-2013.jsp' class="quoteCheckbox"/>
-          View <strong>2013</strong> member information</label>
-        </fieldset>
-            
-        <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-        <span class="checkboxText">I am Medicare eligible</span></label>    
-
-        <!-- hidden fields -->  
-        <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
-        <input class="ignore" id="state" name="state" value="" type="hidden" />
-        <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
-        <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
-        <input class="ignore" id="alreadyMedicare" name="onMedicare" type="hidden" value='on'/>
-        <input class="ignore" value="" name="id" id="productID" type="hidden" />
-        <input class="ignore" id="age" name="a0" value="0" size="2" maxlength="3" type="hidden" />
-        <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
-        <input class="ignore" value='partd' name='plantype' type="hidden"  />
-        <input class="ignore" value='' name='fromFile' type="hidden"  />
-        <input class="ignore" value='s' name='r0' type="hidden"  />
-        <input class="ignore" value='off' name='t0' type="hidden"  />
-        <input class="ignore" type='hidden' name='fromFile' value=''/>
-      </div>
-
-      <!--Medigap Form-->
-      <div id="medigapForm" class="fieldset_remove" style="display:none;">
-
-        <label>Zip Code</label>
-        <input id="ZipCode" name="zip" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
-        <div id="spinner"><img src="/medicare/images/load_small.gif"/></div>
-
-        <div class="county">
-          <label>Select your county</label>
-          <select id="counties" name="county" class="textbox">
-            <option id="default" value=''>Please Select...</option>
-          </select>
-          <input class="ignore" id="planvalue" value='' name="planvalue" type="hidden" />
-        </div>
-
-        <label>Age</label>
-        <input id="age" name="a0" class="textbox" value="0" size="2" maxlength="3" type="text" />
-
-        <label>Gender</label>
-        <select id='gender' name='g0' class="textbox select_gender">
-          <option value=''></option>
-          <option value='m'>Male</option>
-          <option value='f'>Female</option>
-        </select>
-
-        <label class="checkbox"><input id="alreadyMedicare" name="onMedicare" type="checkbox" value='on' class="quoteCheckbox"/>
-        I am already on Medicare Part A/B</label>
-
-        <!-- hidden fields -->
-        <input class="ignore" id="serviceArea" name="serviceArea" value="" type="hidden" />
-        <input class="ignore" id="state" name="state" value="" type="hidden" />
-        <input class="ignore" id="offerMedigap" name="offerMedigap" value="" type="hidden" />
-        <input class="ignore" id="offerMedAdvantage" name="offerMedAdvantage" value="" type="hidden" />
-        <input class="ignore" value="" name="id" id="productID" type="hidden" />
-        <input class="ignore" id="plancode" value='non-asuris' name='plancode' type="hidden" />
-        <input class="ignore" value='medigap' name='plantype' type="hidden"  />
-        <input class="ignore" value='' name='fromFile' type="hidden"  />
-        <input class="ignore" value='s' name='r0' type="hidden"  />
-        <input class="ignore" value='off' name='t0' type="hidden"  />
-        <input class="ignore" type='hidden' name='fromFile' value=''/>
-
-      </div>
+      <input class="ignore" id="age" name="a0" value="65" size="2" maxlength="3" type="hidden" />
 
       <!--Button and Form Error Placement-->
-      <label class="checkbox"><input id="rememberMe" name="keepMe" type="checkbox" value="" class="quoteCheckbox"/>
+      <label for="rememberMe" class="checkbox"><input id="rememberMe" name="rememberMe" type="checkbox" value="" class="quoteCheckbox"/>
       <span class="checkboxText">Remember me on this computer</span></label>
-
-      <div class="error_container"></div>
-      <div class='formErrorsDemo'></div>
-
-      <input class="ignore" id="age" name="a0" value="65" size="2" maxlength="3" type="hidden" />
 
     </form>
   </div>
@@ -787,12 +651,12 @@
 
       <div class="control-group">
         <div class="controls">
-          <label>Select one or both:</label>
-          <label class="checkbox">
+          <p>Select one or both:</p>
+          <label for="plan" class="checkbox">
             <input name="plan" type="checkbox" id="plan" value="medadv">
             Medicare Advantage Plans
           </label>
-          <label class="checkbox">
+          <label for="plan2" class="checkbox">
             <input name="plan2" type="checkbox" id="plan2" value="partd">
             Medicare Part D Plans
           </label>
