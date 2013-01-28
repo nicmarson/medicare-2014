@@ -1,19 +1,29 @@
 
 $(function() {
-	//setCookie('ZIP',"97217",90);
+	setCookie('ZIP',"97217",90);
 	
 	var demographicsDataModel = new Demographics();
 	demographicsDataModel = setDataModelValues(demographicsDataModel);
 	
-	$("#showZipCode").text(demographicsDataModel.zip);
-
+	if (demographicsDataModel.zip){
+		$("#showZipCode").text(demographicsDataModel.zip);
+	}else{
+		$('#demographicsModal .close').addClass('hide');
+		$('#demographicCloseButton').addClass('hide');
+		$('#demographicsModal').modal({
+			keyboard: 	false,
+			backdrop: 	'static',
+			show:		true
+		});
+	}
+	
+	$('#demographicSaveButton').click(function(){
+		//$('#getQuoteForm').submit(function(){
+			alert('Foo');
+		//});
+	});
 	
 	console.log(demographicsDataModel);
-	//demographicsDataModel
-	//alert(getCookie('test'));
-	//alert(getCookie('foo'));
-	//alert(getCookie());
-//$('#demographicsModal').modal('show');
 });
 
 /***********************

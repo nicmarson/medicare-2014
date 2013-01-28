@@ -254,7 +254,7 @@
         <li class="pull-right"><a href="/espanol/index.jsp">en Espa&ntilde;ol</a></li>
         <li class="pull-right">
           
-          No ZIP Code
+          <span id="showZipCode">No ZIP Code</span>
         
         (<a href="#demographicsModal" data-toggle="modal">Edit</a>) <span class="divider">/</span></li>        
       </ul>
@@ -317,8 +317,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary" id="demographicButton">Save changes</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true" id="demographicCloseButton">Close</button>
+    <button class="btn btn-primary" id="demographicSaveButton">Save changes</button>
   </div>
 </div>
 
