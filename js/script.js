@@ -1,7 +1,215 @@
 
 $(function() {
-$('#myModal').modal('show');
+	//setCookie('ZIP',"97217",90);
+	
+	var demographicsDataModel = new Demographics();
+	demographicsDataModel = setDataModelValues(demographicsDataModel);
+	
+	$("#showZipCode").text(demographicsDataModel.zip);
+
+	
+	console.log(demographicsDataModel);
+	//demographicsDataModel
+	//alert(getCookie('test'));
+	//alert(getCookie('foo'));
+	//alert(getCookie());
+//$('#demographicsModal').modal('show');
 });
+
+/***********************
+*
+* Data Model
+*
+***********************/
+
+/***********
+*	@name:			Demographics()
+*	@description:	Build and setup Demographics data model
+*
+*	@param: 		N/A
+*	@returns: 		true;
+***********/
+function Demographics(){
+	this.exp = false;
+	this.keepMe = false; 
+	this.alreadyMedicare = false;
+	this.coverage = false; // Coverage year
+	this.planValue = false; // State identification
+	this.county = false; // County name
+	this.serviceArea = false; // Default will use planValue, otherwise will overwrite planValue
+	this.zip = false; // Zip code
+	this.age = false; // Age
+	this.gender = false; // Gender
+	this.plancode = false; // Asuris or non-asuris 
+	this.state = false; // state identifier
+	this.offerMedAdvantage = false;
+	this.offerMedigap = false;
+	return;
+}
+
+/***********
+*	@name:			setDataModelValues()
+*	@description:	Set Data Model Values from Cookies if the cookies Exist.
+*
+*	@param: 		(string) 		dataModel 	Data Model to Build Into
+*
+*	@returns: 		(string|false)	Requested Cookie Value
+***********/
+function setDataModelValues(dataModel){
+	dataModel.zip = getCookie('ZIP');
+	
+	return dataModel;
+	//   // set value to already Medicare field
+	//   if ( $("input[name=onMedicare]").is(':checked') ) {
+	//     $("input[name=onMedicare]").val('on');
+	//     alreadyMedicare = 'on';
+	//   } else {
+	//     alreadyMedicare = 'off';
+	//   }
+// 	var cookieString = "{'zip':'" + zip + "','age':'" + age + "', 'state':'" + state + "', 'county':'" + county + "', 'serviceArea':'" + serviceArea + "', 'gender':'" + gender + "', 'offerMedAdvantage':'" + offerMedAdvantage + "', 'offerMedigap':'" + offerMedigap + "', 'coverage':'" + coverage + "', 'onMedicare':'" + alreadyMedicare + "', 'plancode':'" + plancode + "', 'rememberMe':'" + keepMe + "'}";
+}
+
+// Set the Cookie String Data
+// function setCookieString() {
+//   var exp;
+//   var keepMe; 
+//   var alreadyMedicare;
+//   var coverage = $("input[name=coverage]:checked").val(); // Coverage year
+//   var planValue = $.cookie("PLANCODE"); // State identification
+//   var county = $("#counties").val(); // County name
+//   var serviceArea = $("#serviceArea").val(); // Default will use planValue, otherwise will overwrite planValue
+//   var zip = $("#ZipCode").val(); // Zip code
+//   var age = $("#age").val(); // Age
+//   var gender = $("#gender").val(); // Gender
+//   var plancode = $("#plancode").val(); // Asuris or non-asuris 
+//   var state = $("#state").val(); // state identifier
+//   var offerMedAdvantage = $("#offerMedAdvantage").val();
+//   var offerMedigap = $("#offerMedigap").val();
+//   
+//   // Remember user sets the expiration days of cookie
+//   if ( $("input[name=keepMe]").is(':checked') ) {
+//     exp = 90; // Remember user
+//     $("input[name=keepMe]").val('on');
+//     keepMe = 'on';
+//   } else {
+//     exp = 0; // Do not remember user
+//     keepMe = 'off';
+//   }
+//   
+//   // set value to already Medicare field
+//   if ( $("input[name=onMedicare]").is(':checked') ) {
+//     $("input[name=onMedicare]").val('on');
+//     alreadyMedicare = 'on';
+//   } else {
+//     alreadyMedicare = 'off';
+//   }
+//   
+//   
+//   
+//   // Demographics cookie
+//   $.cookie("demographics", ( cookieString ), { path: '/', expires: exp });
+//   
+//   // Plancode coookie 
+//   $.cookie("PLANCODE", ( planValue ), { path: '/', expires: exp });
+//   
+//   // SALO: the medigap pages are still using these cookies, annoying... 
+//   // need to set them here to navigate from medAdvantage to medigap
+//   var zip; var age; var gender;
+//   zip = $('#ZipCode').val();
+//   age = $('#age').val();
+//   gender = $('#gender').val();
+//   $.cookie('age0', ( age ), {path: '/', expires: 0});
+//   $.cookie('ZIP', ( zip ), {path: '/', expires: 0});
+//   $.cookie('gender0', ( gender ), {path: '/', expires: 0});
+// }
+
+/***********************
+*
+* Utilities
+*
+***********************/
+
+/***********
+*	@name:			getCookie()
+*	@description:	Get Cookie
+*
+*	@param: 		(null|string) 		cookieName Cookie Name
+*	@returns: 		(array) | (string|false)	Requested Cookie Value
+***********/
+function getCookie(cookieName){
+	var i,x,y,ARRcookies=document.cookie.split(";");
+	if(typeof(cookieName) == 'undefined'){
+		return ARRcookies;
+	}else{
+		for (i=0;i<ARRcookies.length;i++)
+		{
+			x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+			y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+			x=x.replace(/^\s+|\s+$/g,"");
+				if (x==cookieName)
+				{
+					return unescape(y);
+				}
+		}
+		return false;
+	}
+}
+
+/***********
+*	@name:			setCookie()
+*	@description:	Set Cookie
+*
+*	@param: 		(string) 		cookieName 	Cookie Name
+*	@param: 		(string) 		cookieValue Cookie Value
+*	@param: 		(int|null) 		exp 		Cookie Exp Days
+*
+*	@returns: 		(string|false)	Requested Cookie Value
+***********/
+function setCookie(cookieName, cookieValue, exp){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + exp);
+	var c_value=escape(cookieValue) + ((exp==null) ? "" : "; expires="+exdate.toUTCString());
+	document.cookie=cookieName + "=" + c_value + "; path=/";
+}
+
+// Possibly not used.
+/***********
+*	@name:			getCookie()
+*	@description:	Get Cookie
+*
+*	@param: 		(string) 		cookieName Cookie Name
+*	@returns: 		(string|false)	Requested Cookie Value
+***********/
+function checkCookie(cookieName){
+	console.log(document.cookie);
+	var i,x,y,ARRcookies=document.cookie.split(";");
+	for (i=0;i<ARRcookies.length;i++)
+	{
+		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+		x=x.replace(/^\s+|\s+$/g,"");
+			if (x==cookieName)
+			{
+				return unescape(y);
+			}
+	}
+}
+
+// function getCookie(c_name)
+// {
+// var i,x,y,ARRcookies=document.cookie.split(";");
+// for (i=0;i<ARRcookies.length;i++)
+// {
+//   x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+//   y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+//   x=x.replace(/^\s+|\s+$/g,"");
+//   if (x==c_name)
+//     {
+//     return unescape(y);
+//     }
+//   }
+// }
+
 
 
 // Our Javascript Calls
