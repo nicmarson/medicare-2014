@@ -1,6 +1,7 @@
 
 $(function() {
 	setCookie('ZIP',"97217",90);
+	setCookie('PLANCODE',"OR",90);
 	
 	var demographicsDataModel = new Demographics();
 	demographicsDataModel = setDataModelValues(demographicsDataModel);
@@ -22,99 +23,11 @@ $(function() {
 			alert('Foo');
 		//});
 	});
-	
-	
-	
-	
-	$('.external-site').click(function(e){
-		//console.log(e);
-		//console.log(e.isDefaultPrevented()); // false
-		//e.preventDefault();
-		//console.log(e);
-		//console.log($(this).get(0).form);
-		$('#confirmLeavingButton').unbind();
-		var thisHref = $(this).get(0).href;
-		var thisForm = $(this).get(0).form;
-		if ($(this).get(0).form != undefined){
-			$('#confirmLeavingButton').click(function(){
-				$(this).get(0).form.submit();
-			});
-		}else if($(this).get(0).href != undefined){
-			$('#confirmLeavingButton').click(function(){
-				window.open(thisHref);
-				$('#confirmLeaving').modal({
-					show: false
-				});
-			});
-		}else{
-			return true;
-		}
-		$('#confirmLeaving').modal({
-			show: true
-		});
-		$('#confirmLeavingButton').click(function(){
-			return true;
-		});
-		return false;
-		//$(this).confirmLeavingButton
-	});
-	
-	
-	
+
+	attachExternalSite();
+		
 	console.log(demographicsDataModel);
 });
-
-// 	var planCode = ($.cookie("PLANCODE"));
-// 	$('input.external-site').click(function() {
-// 		var thisForm = $(this).parent();
-// 		if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
-// 			$.colorbox({
-// 				html: leaveRegenceHTML, 
-// 				title: '', 
-// 				width: '500px', 
-// 				height: '300px', 
-// 				onComplete:function(){
-// 					$('#cboxTitle').hide();
-// 					$('#leavingContBtn').click( function() {
-// 						$.colorbox.close();
-// 						thisForm.submit();
-// 					});
-// 					$('#leavingRetnBtn').click( function() {
-// 						$.colorbox.close();
-// 					});
-// 				}
-// 			});
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
-// 	});
-// 	$('a.external-site').click(function(e) {
-// 		var thisLink = $(this).attr('href');
-// 		if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
-// 			$.colorbox({
-// 				html: leaveRegenceHTML, 
-// 				title: '', 
-// 				width: '500px', 
-// 				height: '300px', 
-// 				onComplete:function(){
-// 					$('#cboxTitle').hide();
-// 					$('#leavingContBtn').click( function() {
-// 						$.colorbox.close();
-// 						window.open(thisLink);
-// 					});
-// 					$('#leavingRetnBtn').click( function() {
-// 						$.colorbox.close();
-// 					});
-// 				}
-// 			});
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
-// 	});
-
-
 
 /***********************
 *
@@ -222,6 +135,55 @@ function setDataModelValues(dataModel){
 //   $.cookie('ZIP', ( zip ), {path: '/', expires: 0});
 //   $.cookie('gender0', ( gender ), {path: '/', expires: 0});
 // }
+
+
+/***********************
+*
+* Event Bindings
+*
+***********************/
+
+/***********
+*	@name:			attachExternalSite()
+*	@description:	Attach Modals to External site classed links and forms.
+*
+*	@param: 		N/A
+*	@returns: 		N/A
+***********/
+function attachExternalSite(){
+	var planCode = getCookie("PLANCODE");
+	console.log(planCode)
+	if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
+		$('.external-site').click(function(e){
+		
+			// Always unbind the single modal effect on start.
+			$('#confirmLeavingButton').unbind();
+		
+			// Get variables to test the condition of the form, One will be Undefined.
+			var thisHref = $(this).get(0).href;
+			var thisForm = $(this).attr('for');
+		
+			if ($(this).get(0).form != undefined){
+				$('#confirmLeavingButton').click(function(){
+					$('#'+thisForm).submit(); //submit();
+				});
+			}else if($(this).get(0).href != undefined){
+				$('#confirmLeavingButton').click(function(){
+					window.open(thisHref);
+					$('#confirmLeaving').modal({
+						show: false
+					});
+				});
+			}else{
+				return true;
+			}
+			$('#confirmLeaving').modal({
+				show: true
+			});
+			return false;
+		});
+	}	
+}
 
 /***********************
 *

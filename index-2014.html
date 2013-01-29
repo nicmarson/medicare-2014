@@ -392,14 +392,14 @@
           <li>Covers all classifications of<br />Medicare-approved prescription drugs</li>
         </ul>
         <!-- Uncomment this element for Production -->
-        <form name="healthplanquote" action="https://regence.inshealth.com/ehi/medicare/census" method="GET">
+        <form name="healthplanquote" id="healthplanquote" action="https://regence.inshealth.com/ehi/medicare/census" method="GET">
         <!-- Uncomment this element for Testing -->
         <!-- <form name="healthplanquote" action="https://regence.qa.inshealth.com/ehi/medicare/census" method="GET" class="bottom"> -->
           <input type="hidden" name="allid" value="reg30527" />
           <input type="hidden" name="type" value="MD" />
           <input type="hidden" name="contactid" value="9812" />
           <input type="hidden" name="zip" value="" />
-          <button type="submit" class="btn btn-large btn-positioned btn-primary external-site" id="beginShopButton2">Begin Shopping</button>
+          <button type="submit" class="btn btn-large btn-positioned btn-primary external-site" for="healthplanquote" id="beginShopButton2">Begin Shopping</button>
         </form>
       </div>
 
