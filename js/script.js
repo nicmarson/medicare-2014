@@ -23,8 +23,98 @@ $(function() {
 		//});
 	});
 	
+	
+	
+	
+	$('.external-site').click(function(e){
+		//console.log(e);
+		//console.log(e.isDefaultPrevented()); // false
+		//e.preventDefault();
+		//console.log(e);
+		//console.log($(this).get(0).form);
+		$('#confirmLeavingButton').unbind();
+		var thisHref = $(this).get(0).href;
+		var thisForm = $(this).get(0).form;
+		if ($(this).get(0).form != undefined){
+			$('#confirmLeavingButton').click(function(){
+				$(this).get(0).form.submit();
+			});
+		}else if($(this).get(0).href != undefined){
+			$('#confirmLeavingButton').click(function(){
+				window.open(thisHref);
+				$('#confirmLeaving').modal({
+					show: false
+				});
+			});
+		}else{
+			return true;
+		}
+		$('#confirmLeaving').modal({
+			show: true
+		});
+		$('#confirmLeavingButton').click(function(){
+			return true;
+		});
+		return false;
+		//$(this).confirmLeavingButton
+	});
+	
+	
+	
 	console.log(demographicsDataModel);
 });
+
+// 	var planCode = ($.cookie("PLANCODE"));
+// 	$('input.external-site').click(function() {
+// 		var thisForm = $(this).parent();
+// 		if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
+// 			$.colorbox({
+// 				html: leaveRegenceHTML, 
+// 				title: '', 
+// 				width: '500px', 
+// 				height: '300px', 
+// 				onComplete:function(){
+// 					$('#cboxTitle').hide();
+// 					$('#leavingContBtn').click( function() {
+// 						$.colorbox.close();
+// 						thisForm.submit();
+// 					});
+// 					$('#leavingRetnBtn').click( function() {
+// 						$.colorbox.close();
+// 					});
+// 				}
+// 			});
+// 			return false;
+// 		} else {
+// 			return true;
+// 		}
+// 	});
+// 	$('a.external-site').click(function(e) {
+// 		var thisLink = $(this).attr('href');
+// 		if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
+// 			$.colorbox({
+// 				html: leaveRegenceHTML, 
+// 				title: '', 
+// 				width: '500px', 
+// 				height: '300px', 
+// 				onComplete:function(){
+// 					$('#cboxTitle').hide();
+// 					$('#leavingContBtn').click( function() {
+// 						$.colorbox.close();
+// 						window.open(thisLink);
+// 					});
+// 					$('#leavingRetnBtn').click( function() {
+// 						$.colorbox.close();
+// 					});
+// 				}
+// 			});
+// 			return false;
+// 		} else {
+// 			return true;
+// 		}
+// 	});
+
+
 
 /***********************
 *
@@ -254,55 +344,7 @@ function checkCookie(cookieName){
 // 
 // 	var leaveRegenceHTML = '<h2 style="color: #000; margin: 40px 30px;">You are about to leave the Regence Web site and enter another site that is NOT affiliated with or licensed by the Blue Cross Blue Shield Association.</h2><div style="position:absolute; left: 5%; bottom: 5%;"><a href="javascript:void(0)" id="leavingRetnBtn" class="button" style="border: 2px solid #71893f;background: #475c23; width: 100%;" title="Leave Regence"><span style="padding: 17px 12px;">Remain on Regence site</span></a></div><div style="position:absolute; right: 5%; bottom: 5%;"><a href="javascript:void(0)" id="leavingContBtn" class="button" style="border: 2px solid #71893f;background: #475c239; width: 100%;" title="Leave Regence"><span style="padding: 17px 12px;">Leave Regence</span></a></div>';
 // 
-// 	var planCode = ($.cookie("PLANCODE"));
-// 	$('input.external-site').click(function() {
-// 		var thisForm = $(this).parent();
-// 		if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
-// 			$.colorbox({
-// 				html: leaveRegenceHTML, 
-// 				title: '', 
-// 				width: '500px', 
-// 				height: '300px', 
-// 				onComplete:function(){
-// 					$('#cboxTitle').hide();
-// 					$('#leavingContBtn').click( function() {
-// 						$.colorbox.close();
-// 						thisForm.submit();
-// 					});
-// 					$('#leavingRetnBtn').click( function() {
-// 						$.colorbox.close();
-// 					});
-// 				}
-// 			});
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
-// 	});
-// 	$('a.external-site').click(function(e) {
-// 		var thisLink = $(this).attr('href');
-// 		if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
-// 			$.colorbox({
-// 				html: leaveRegenceHTML, 
-// 				title: '', 
-// 				width: '500px', 
-// 				height: '300px', 
-// 				onComplete:function(){
-// 					$('#cboxTitle').hide();
-// 					$('#leavingContBtn').click( function() {
-// 						$.colorbox.close();
-// 						window.open(thisLink);
-// 					});
-// 					$('#leavingRetnBtn').click( function() {
-// 						$.colorbox.close();
-// 					});
-// 				}
-// 			});
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
-// 	});
+
 // 
 // 	function isUndefined(x) {var u; return x === u;}
 // 
