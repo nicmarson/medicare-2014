@@ -67,16 +67,6 @@ ul.bulleted > li {
 nav.toplevel {
   position: relative;
 
-  .breadcrumb {
-    background: none;
-    margin: 0;
-    padding: 0;
-
-    form {
-      margin: 0;
-      padding-left: 10px;
-    }
-  }
   li > a:hover {
     background-color: transparent;
   }
@@ -91,12 +81,25 @@ nav.toplevel {
 .nav-phone {
   position: absolute;
   right: 0;
+  text-align: right;
   top: 0;
 }
-.nav-help {
+.lt-ie9 .nav-phone {
+  width: 30em;
+}
+.nav .nav-help {
   bottom: 10px;
   position: absolute;
   right: 0;
+
+  a {
+    display: inline;
+  }
+  form {
+    display: inline;
+    margin: 0;
+    padding-left: 10px;
+  }
 }
 
 // Hero with image
@@ -135,4 +138,95 @@ nav.toplevel {
 .btn-block {
   padding-left: 15px;
   text-align: left;
+}
+
+// Medicare Tab Menu
+.nav-shopping {
+
+  li > a {
+    font-size: 24px;
+    line-height: 24px;
+
+    small {
+      display: block;
+      font-size: 16px;
+    }
+  }
+  .tab-learn {
+    background-image: url("/medicare/images/menu-bg-7bb0c9.png")
+  }
+  .tab-shop {
+    background-image: url("/medicare/images/menu-bg-8a85a3.png")
+  }
+  .tab-help {
+    background-image: url("/medicare/images/menu-bg-7e9c2e.png")
+  }
+}
+#tab-learn {
+
+  a {
+    background: transparent url('/medicare/images/info-advantages.gif') no-repeat 0 0;
+    width:250px;
+    height:160px;
+    display:block;
+    margin:0 0 10px 15px;
+  }
+  .info-education a {
+    background-image: url('/medicare/images/info-education.gif');
+  }
+  .info-sharethewell a {
+    background-image: url('/medicare/images/info-sharethewell.gif');
+  }
+}
+#tab-shop {
+
+  h4 {
+    color: #8a85a3;
+  }
+  ul {
+    background:transparent url('/medicare/images/coverage-partd.gif') no-repeat 15px 0;
+    padding-top: 175px;
+  }
+  li {
+    font-size: 1.4em;
+    padding-left: 15px;
+    line-height: 1.2em;
+  }
+  .coverage-medadvantage {
+    margin-bottom: 1em;
+
+    ul {
+      background-image: url('/medicare/images/coverage-medadvantage.gif');
+    }
+  }
+  .coverage-medigap ul {
+    background-image: url('/medicare/images/coverage-medigap.gif');
+  }
+}
+#tab-help {
+
+  h4 {
+    color: #78972c;
+  }
+  ul {
+    padding-left: 70px;
+    background: transparent url('../images/contact-phone.gif') no-repeat 2px 10px;
+  }
+  .last {
+    margin-top:1em;
+
+    ul {
+      background-image: none;
+      padding-left: 0;
+    }
+    li {
+      padding: 15px 0 15px 70px;
+    }
+    .seminar {
+      background:transparent url('/medicare/images/contact-chat.gif') no-repeat 15px 7px;
+    }
+    .literature {
+      background:transparent url('/medicare/images/contact-email.gif') no-repeat 15px 7px;
+    }
+  }
 }
