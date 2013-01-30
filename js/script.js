@@ -7,6 +7,9 @@ $(function() {
 	var demographicsDataModel = new Demographics();
 	demographicsDataModel = setDataModelValues(demographicsDataModel);
 	
+	// Show or Hide Content based on Datamodel
+	setProductToggle(demographicsDataModel);
+	
 	//Check Data Model Existence or Display Modal for info
 	displayInitialModal(demographicsDataModel);
 	
@@ -15,7 +18,7 @@ $(function() {
 	
 	// Event Binding Setup for External Site Links.
 	attachExternalSite();
-		
+	
 	console.log(demographicsDataModel);
 });
 
@@ -211,6 +214,7 @@ function displayInitialModal(dataModel){
 		
 		$('#demographicsModal .close').addClass('hide');
 		$('#demographicCloseButton').addClass('hide');
+		$('#demographicSaveButton').text('hide');
 		$('#demographicsModal').modal({
 			keyboard: 	false,
 			backdrop: 	'static',
@@ -292,8 +296,122 @@ function checkCookie(cookieName){
 	}
 }
 
+/***********************
+*
+* Legacy
+*
+***********************/
 
+/***********
+*	@name:			setProductToggle()
+*	@description:	Check to see if medigap and/or medadvantage is not offered in the selected county
+*
+*	@param: 		(object) 		dataModel Data Model for Value checking
+*	@returns: 		N/A
+*
+*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls.
+***********/
+function setProductToggle(dataModel) {
+  if (getCookie("demographics") ) {
+    var c = eval('(' + getCookie("demographics") + ')');
+    var medigap = c['offerMedigap'];
+    var medadvantage = c['offerMedAdvantage'];
+    if (debug){log('medigap is set to ' + medigap);}
+    if (debug){log('medadvantage is set to ' + medadvantage);}
+    
+    // css for these are set by default to display:none;
+    if (medigap == 'false' && medadvantage == 'false'){
+      $("#menu2").removeClass('active');
+      $("#menu2 a").attr("href", "/medicare/part-d/index.jsp").html("Shop <span>Compare Part-D plans</span>");
+    }
+    
+    if (medigap == 'true'){
+      $("#MedigapWrapper").show();
+      $("#navMedigap").show();
+    } else {
+      $("#MedigapWrapper").removeClass('product');
+      $("#navMedigap").removeClass('navproduct');
+    }
+    
+    if (medadvantage == 'true'){
+      $("#medAdvantageWrapper").show();
+      $("#navMedAdvantage").show();
+      $(".medAdvantageLink").show();
+      $('#medicareplans .plansbox').addClass('sunit4').removeClass('sunit6');
+    } else {
+      $("#medAdvantageWrapper").removeClass('product');
+      $("#navMedAdvantage").removeClass('navproduct');
+      $('#medAdvantageWrapper').hide();
+      $('.medAdvantageLink').hide();
+      $('#medicareplans .plansbox').removeClass('sunit4').addClass('sunit6');
+    }
+    var t = $(".navproduct").length;
+    if (t == '3'){
+      $("#partDWrapper").show();
+    } else if (t == '2'){
+      $(".product").css('width', '400px');
+      $(".navproduct").css('width', '427px');
+      $(".product:last").css('border-right', 'none');
+      $(".navproduct:last").css('border-right', 'none');
+      $("#partDWrapper").show();
+    } else if (t == '1'){
+      $(".product").css('width', '800px');
+      $(".navproduct").css('width', '800px');
+      $(".product:last").css('border-right', 'none');
+      $(".navproduct:last").css('border-right', 'none');
+      $("#partDWrapperSingle").show();
+      $("#partDWrapper").hide();
+    } else {
+      $("#partDWrapper").show();
+    }
+    
+  }
+}
 
+/***********
+*	@name:			checkAvail()
+*	@description:	Check if MedAdvantage and/or Medigap is offered, remove tabs if needed
+*
+*	@param: 		(object) 		dataModel Data Model for Value checking
+*	@returns: 		N/A
+*
+*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. THis seems to duplicate functionality of existing
+*
+***********/
+// Check if MedAdvantage and/or Medigap is offered, remove tabs if needed
+function checkAvail(dataModel) {
+  if ($.cookie("demographics") ) {
+    var c = eval('(' + $.cookie("demographics") + ')');
+    var medigap = c['offerMedigap'];
+    var medadvantage = c['offerMedAdvantage'];
+    // Members Page
+    $(".checkAvail").each(function () {
+      if (medigap == 'false'){
+        $("#tab4").remove();
+        $("#medigap").remove();
+      }
+      if (medadvantage == 'false'){
+        $("#tab1").remove();
+        $("#medAdv").remove();
+        $("#tab2").remove();
+        $("#medAdvRx").remove();
+        $("#tab3").addClass('first');
+      } 
+    });
+    // Forms Page
+    $(".checkAvailForms").each(function () {
+      if (medigap == 'false'){
+        $("#tab4").remove();
+        $("#medigap").remove();
+      } 
+      if (medadvantage == 'false'){
+        $("#tab2").remove();
+        $("#medAdvantage").remove();
+      }
+    });
+    
+  }
+}
 
 
 
