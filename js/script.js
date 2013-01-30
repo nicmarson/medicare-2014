@@ -1,7 +1,7 @@
 
 $(function() {
- 	setCookie('ZIP',"97217",90);
- 	setCookie('PLANCODE',"OR",90);
+ 	//setCookie('ZIP',"97217",90);
+ 	//setCookie('PLANCODE',"OR",90);
 	
 	// Instance the Data Model
 	var demographicsDataModel = new Demographics();
@@ -184,9 +184,7 @@ function attachExternalSite(){
 ***********/
 function attachDemographicsForm(){
 	$('#demographicSaveButton').click(function(){
-		//$('#getQuoteForm').submit(function(){
-			alert('Foo');
-		//});
+		$('#getQuoteForm').submit();
 	});
 	
 }
