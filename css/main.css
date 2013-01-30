@@ -6,4 +6,157 @@
  * Version - 1.0
  *
  * Designed and built to fix consistency issues with the Medicare site
- */.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}.clearfix:after{clear:both}.hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}body{padding-top:20px;padding-bottom:40px}h1{color:#0881c2;font-size:36px;line-height:46px;margin:10px 0;text-shadow:0 0 1px rgba(0,0,0,.1)}h2{color:#ca5400;font-size:28px;line-height:36px;text-shadow:0 0 1px rgba(0,0,0,.1)}h3{font-size:20px;line-height:26px;text-shadow:0 0 1px rgba(0,0,0,.1)}ul.bulleted li{margin:10px 0}ul.bulleted>li{list-style:square}.generatedcontent ul.bulleted>li{list-style:none;position:relative}.generatedcontent ul.bulleted>li:before{background:#ca5400;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;content:"";height:8px;left:-20px;position:absolute;top:7px;width:8px}nav.toplevel{position:relative}nav.toplevel li>a:hover{background-color:transparent}.nav-brand{float:left}.nav-brand a{min-height:47px}.nav-phone{position:absolute;right:0;text-align:right;top:0}.lt-ie9 .nav-phone{width:30em}.nav .nav-help{bottom:10px;position:absolute;right:0}.nav .nav-help a{display:inline}.nav .nav-help form{display:inline;margin:0;padding-left:10px}.hero-image{padding:0;position:relative}.hero-medicare{background:url("http://www.regence.com/medicare/images/homebox-bg.jpg") no-repeat #5a8396}.hero-medicare h1{color:#fff;font-size:40px;line-height:40px}.hero-medicare h1 small{color:#fff;font-size:30px;line-height:36px}.hero-medicare .hero-inner{height:120px;padding-left:365px;padding-top:30px}.btn-container-bottom{padding-bottom:45px;position:relative}.btn-block{padding-left:15px;text-align:left}.medicare-tabmenu li>a{font-size:24px;line-height:24px}.medicare-tabmenu li>a small{display:block;font-size:16px}.medicare-tabcontent .thumbnail{padding-left:10px;padding-right:10px}.medicare-tabcontent .thumbnail h3 small{display:block}
+ */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+h1 {
+  color: #0881c2;
+  font-size: 36px;
+  line-height: 46px;
+  margin: 10px 0;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  color: #ca5400;
+  font-size: 28px;
+  line-height: 36px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+h3 {
+  font-size: 20px;
+  line-height: 26px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+ul.bulleted li {
+  margin: 10px 0;
+}
+ul.bulleted > li {
+  list-style: square;
+}
+.generatedcontent ul.bulleted > li {
+  list-style: none;
+  position: relative;
+}
+.generatedcontent ul.bulleted > li:before {
+  background: #ca5400;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  content: "";
+  height: 8px;
+  left: -20px;
+  position: absolute;
+  top: 7px;
+  width: 8px;
+}
+nav.toplevel {
+  position: relative;
+}
+nav.toplevel li > a:hover {
+  background-color: transparent;
+}
+.nav-brand {
+  float: left;
+}
+.nav-brand a {
+  min-height: 47px;
+}
+.nav-phone {
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 0;
+}
+.lt-ie9 .nav-phone {
+  width: 30em;
+}
+.nav .nav-help {
+  bottom: 10px;
+  position: absolute;
+  right: 0;
+}
+.nav .nav-help a {
+  display: inline;
+}
+.nav .nav-help form {
+  display: inline;
+  margin: 0;
+  padding-left: 10px;
+}
+.hero-image {
+  padding: 0;
+  position: relative;
+}
+.hero-medicare {
+  background-color: #5A8396;
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+.hero-medicare h1 {
+  color: #ffffff;
+  font-size: 40px;
+  line-height: 40px;
+}
+.hero-medicare h1 small {
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 40px;
+}
+.hero-medicare .hero-inner {
+  height: 120px;
+  padding-right: 365px;
+  padding-top: 20px;
+  text-align: right;
+}
+.medicare-about .hero-medicare {
+  background-image: url("http://www.regence.com/medicare/images/info-education.gif");
+}
+.medicare-forms .hero-medicare {
+  background-image: url("http://www.regence.com/medicare/images/request-literature.jpg");
+}
+.medicare-home .hero-medicare {
+  background-image: url("http://www.regence.com/medicare/images/homebox-bg.jpg");
+}
+.medicare-medadvantage .hero-medicare {
+  background-image: url("http://www.regence.com/medicare/images/coverage-medadvantage.gif");
+}
+.medicare-members .hero-medicare {
+  background-image: url("http://www.regence.com/medicare/images/info-sharethewell.gif");
+}
+.btn-container-bottom {
+  padding-bottom: 45px;
+  position: relative;
+}
+.btn-block {
+  padding-left: 15px;
+  text-align: left;
+}
