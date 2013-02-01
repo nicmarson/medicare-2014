@@ -1,3 +1,11 @@
+/***********************
+*
+* Medicare 2013 JS
+* Author	Tara Grieb and Unnamed Uncountable Legacy Coders
+* Thought	There are no temporary fixes, just permanent patches.
+*
+***********************/
+
 
 $(function() {
  	setCookie('ZIP',"97217",90);
@@ -185,7 +193,7 @@ function attachExternalSite(){
 *	@param: 		N/A
 *	@returns: 		N/A
 *
-*	@TODO			Remove and refactor legacy stuff as time allows.
+*	@TODO			Remove and refactor legacy stuff as time allows. Hook up Validate Error Shhhtuffff.
 ***********/
 function attachDemographicsForm(dataModel){
 	// On Visible Focus on the first. ??? Needs Testing
@@ -194,96 +202,179 @@ function attachDemographicsForm(dataModel){
 	// Set inputs with existing values if set int the data model.
 	setFormValues(dataModel);
 	
-	// There has to be a better way to do this.
-	$("#zipCode").blur(function () {
-		handleZip();
-	});
+	// On key up we check to make sure if the value is correct 
 	$("#zipCode").keyup(function () {
-		handleZip();
-	});
-
-	function handleZip() {
-		//alert('ding');
-		var zipCookie = getCookie('ZIP');
-		var zipValue = $("#zipCode").val();
-		if ( zipValue.length === 5 ){
-			// Get the plan value from planCodeService.do
-			// Returns xml w/ plancode & area
-			var zipcode = zipValue;
-			$.ajax({
-				
-				type: "GET",
-				//url: "/planCodeService.do",
-				url: "http://regence.com/planCodeService.do",
-				data: "zip=" + $("#zipCode").val(),
-				//async: false,
-				statusCode: {
-					404: function() {
-					  validatePlanValue("", "SYSTEM_ERROR");
-					}
-				},
-				success: function (xmlDoc) {
-				  $(xmlDoc).find("plancode").each(function(){
-					var planValue = $(this).find('value').text();
-					var area    = $(this).find('area').text();
-					var errorValue  = $(this).find('error').text();
-					var age     = $("#age").val();
-
-					// TEMP FIX: Asotin county medicare products are provided by ID and not ASURIS 
-					// on the individual application Asotin is provided by ASURIS
-					// Asotin ZIP codes are 99401, 99402, 99403
-					var z = $("#zipCode").val();
-					if ( z == "99401" || z == "99402" || z == "99403" ) {
-					  planValue = 'WARBS';
-					  area = 'id';
-					}
-
-					// if (errorValue == "COUNTY_CHALLENGE") {
-					//  planValue = "OR";
-					//  errorValue = "";
-					// }
-
-					$("#planvalue").val(planValue); // Set planValue
-
-					validatePlanValue(planValue, errorValue);
-					if ( formValidated == false) {
-					  return false;
-					}
-
-					// Set state value
-					if (area == 'clark_co'){
-					  $("#state").val('WA');
-					} else {
-					  $("#state").val(planValue);
-					}
-
-					// hide the county selection
-					if (planValue != 'ASURIS' && planValue != 'ERROR'){
-					  var counties = [];
-					  // Clark County returns OR although we want the county list from WARBS
-					  if (area == 'clark_co'){planValue = 'WARBS'; if(debug){alert('returning clark county');}} 
-					  counties = $(this).getCountyList(planValue);
-					  var send_data = { 'collection':counties };
-					  createCountyList(send_data);
-  
-					  // modify ZIP cookie
-					  //$.cookie('ZIP', ( zipcode ), {path: '/', expires: 0});
-					  setCookie('ZIP', ( zipcode ), 0);
-					  //$.cookie('PLANCODE', ( planValue ), {path: '/', expires: 0});
-  					  setCookie('PLANCODE', ( planValue ), 0);
-  
-					  if (debug){
-						var cookieZip = $.cookie("ZIP");
-						var cookiePlancode = $.cookie("PLANCODE");
-						if(debug){alert('ZIP cookie: \n'+cookieZip+'\n PLANCODE cookie: \n'+cookiePlancode);}
-					  }
-					}
-				  });
-				}
-			  });
-			  
-			  
+		var value = $(this).val();
+		
+		if (value.length == 5)
+		{
+			if ($(this).data( 'last' ) != value)
+			{
+				$(this).data( 'last', value );
+				handleZip(value);
+			}
 		}
+	});
+	
+	/***********
+	*	@name:			handleZip()
+	*	@description:	Internal Function get data from the zip
+	*
+	*	@param: 		(string)	zipcode The basic zipcode value, 5 numbers long. 
+	*	@returns: 		N/A
+	*
+	*	@TODO			Get it DONE No more "Temporary Fixes" There is no such thing.
+	***********/
+	function handleZip(zipcode) {
+		var zipCookie = getCookie('ZIP');
+		
+		// 	Annoying little Debug thing because using Teamsite would drive me crazy, 
+		//	pull before production.....Tara I am looking at you.
+		if (document.domain == 'localsandbox.com')
+		{
+			var planCodeURL = 'plancode.html';
+			//var planCodeURL = '/planCodeService.do';
+		}else{
+			var planCodeURL = '/planCodeService.do';
+		}
+
+		
+		// Get the plan value from planCodeService.do
+		// Returns xml w/ plancode & area
+		// DOES TOO MUCH!
+		var planCodeAjax = $.ajax({
+			type: "GET",
+			url: planCodeURL,
+			data: "zip=" + zipcode,
+			dataType: 'xml'});
+		planCodeAjax.fail(function(){
+			validatePlanValue("", "SYSTEM_ERROR");
+		});
+		planCodeAjax.done(function(data){
+			//console.log(data);
+			$(data).find("plancode").each(function(){
+				var planValue = $(this).find('value').text();
+				var area    = $(this).find('area').text();
+				var errorValue  = $(this).find('error').text();
+				var age     = $("#age").val();
+				
+				// Asotin county medicare products are provided by ID and not ASURIS 
+				if ( zipcode == "99401" || zipcode == "99402" || zipcode == "99403" ) {
+				  planValue = 'WARBS';
+				  area = 'id';
+				}
+
+				$("#planvalue").val(planValue); // Set planValue
+
+				validatePlanValue(planValue, errorValue);
+				if ( formValidated == false) {
+				  return false;
+				}
+
+				// Set state value
+				if (area == 'clark_co'){
+				  $("#state").val('WA');
+				} else {
+				  $("#state").val(planValue);
+				}
+
+				// hide the county selection
+				if (planValue != 'ASURIS' && planValue != 'ERROR'){
+				  var counties = [];
+				  // Clark County returns OR although we want the county list from WARBS
+				  if (area == 'clark_co'){planValue = 'WARBS'; if(debug){alert('returning clark county');}} 
+				  counties = $(this).getCountyList(planValue);
+				  var send_data = { 'collection':counties };
+				  createCountyList(send_data);
+
+				  // modify ZIP cookie
+				  //$.cookie('ZIP', ( zipcode ), {path: '/', expires: 0});
+				  setCookie('ZIP', ( zipcode ), 0);
+				  //$.cookie('PLANCODE', ( planValue ), {path: '/', expires: 0});
+				  setCookie('PLANCODE', ( planValue ), 0);
+
+				  //if (debug){
+					//var cookieZip = $.cookie("ZIP");
+					//var cookiePlancode = $.cookie("PLANCODE");
+					//if(debug){alert('ZIP cookie: \n'+cookieZip+'\n PLANCODE cookie: \n'+cookiePlancode);}
+				  //}
+				}
+			});
+		});
+	}
+	
+	// get county list ajax call
+	jQuery.fn.getCountyList = function (state) {
+	  var countyList = [];
+	  $.ajax({
+		type: 'GET',
+		dataType: 'xml',
+		url: '/xml/USStateList.xml',
+		data: state,
+		async: false,
+		success: function (xmlDoc) {
+		  $(xmlDoc).find('*[planServiceID*='+state+']').each(function () {
+			$(this).find("county").each(function(send_data){
+			  var send_medigap = $(this).attr('medigap');
+			  var send_medAdvantage = $(this).attr('medAdvantage');
+			  var this_name = $(this).text();
+			  var serviceArea = $(this).attr('serviceArea');
+			  data = {name:this_name,serviceArea:serviceArea,medigap:send_medigap,medAdvantage:send_medAdvantage};
+			  countyList.push(data);
+			});
+		  });
+		}
+	  });
+	  //if (debug){log('DEBUG: getCountyList is returning '+countyList)};
+  
+	  return countyList; // returns array of county names
+	}
+	
+	// Create drop down list for counties
+	// data: 
+	// collection: array of counties and passed values
+	// selected: value of county already selected
+	function createCountyList(data) {
+	  $('#counties').html(''); // clear
+	  var countyList = ''; //Using a string since it's much faster to collect all the values and append them once
+	  countyList = '<option class="textbox" title="" value="">Please Select...</option>';
+	//console.log("The data is: "+data['collection']);
+	  $.each(data['collection'], function (i) {
+	//console.log("The list is: "+countyList);
+		var option_name = data['collection'][i]['name'];
+		var medigap = data['collection'][i]['medigap'];
+		var medadvantage = data['collection'][i]['medAdvantage'];
+		var serviceArea = data['collection'][i]['serviceArea'];
+		var options = '{"medigap":"'+medigap+'","medAdvantage":"'+medadvantage+'","serviceArea":"'+serviceArea+'"}';
+		countyList += "<option title='"+options+"' value='"+option_name+"'>"+option_name+"</option>";
+	  });
+	  $('#counties').html(countyList);
+	  if (typeof data['selected'] === 'string'){
+		$("#counties").val(data['selected']);
+	  }
+	  setCountyOptionsToValues();
+	}
+
+	// Set the values to each option in the county list
+	function setCountyOptionsToValues() {
+	  var county_value = $("#counties").val();
+	  var options = "";
+	  if($("#counties option:selected").attr('title').length) {
+		options = $("#counties option:selected").attr('title');
+	  } else {
+		options = '{"medigap":"true","medAdvantage":"true","serviceArea":"default"}';
+	  }
+	/*
+	  //eval("(" + options + ")");
+	*/
+
+	  var obj  = (typeof options == "string") ? $.parseJSON(options) : options;
+	  var offer_medigap = obj['medigap'];
+	  var offer_medadvantage = obj['medAdvantage'];
+	  var serviceArea = obj['serviceArea'];
+	  $("#serviceArea").val(serviceArea);
+	  $("#offerMedigap").val(offer_medigap);
+	  $("#offerMedAdvantage").val(offer_medadvantage);
 	}
 	
 	$('#demographicSaveButton').click(function(){
@@ -832,5 +923,17 @@ function validatePlanValue(planValue, errorValue) {
   }
 }
 
-
-
+/***********
+*	@name:			removeErrors()
+*	@description:	Remove Errors from Demographics Form.
+*
+*	@param: 		(string) 		planValue Plan Value is the Brand Info/Region
+*	@param: 		(string) 		errorValue Error Returned by something or other.
+*	@returns: 		N/A
+*
+*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
+*
+***********/
+function removeErrors() {
+  $(".formErrorsDemo").hide();
+}
