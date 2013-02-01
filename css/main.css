@@ -67,7 +67,7 @@ ul.bulleted > li {
   position: relative;
 }
 .generatedcontent ul.bulleted > li:before {
-  background: #ca5400;
+  background: #ff6f08;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
