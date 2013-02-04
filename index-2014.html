@@ -250,7 +250,7 @@
 <div id="demographicsModal" class="modal js-hide fade" tabindex="-1" role="dialog" aria-labelledby="demographicsModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3 id="demographicsModalLabel">Your demographics</h3>
+    <h3 id="demographicsModalLabel">Update Demographics Information</h3>
   </div>
   <div class="modal-body">
     <form id="getQuoteForm" class="validateMe" method="get">
@@ -258,7 +258,7 @@
       <label for="zipCode">Zip Code</label>
       <input id="zipCode" name="zipCode" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
 
-      <div class="county">
+      <div class="county" id="countyDropdown">
         <label for="counties">Select your county</label>
         <select id="counties" name="counties" class="textbox">
           <option id="default" value=''>Please Select...</option>
