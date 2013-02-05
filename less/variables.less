@@ -20,12 +20,12 @@
 
 // Accent colors
 // -------------------------
-@blue:					#0881C2;
+@blue:					#076DA5;
 @blueDark:              #0064cd;
 @green:                 #1E9442;
 @red:                   #9d261d;
 @yellow:                #ffc40d;
-@orange:                #CA5400;
+@orange:                #B94D00;
 @pink:                  #c3325f;
 @purple:                #916DBD;
 @burgundy:				#791321;
@@ -53,7 +53,7 @@
 // Links
 // -------------------------
 @linkColor:             @blue;
-@linkColorHover:        darken(@linkColor, 15%);
+@linkColorHover:        @red;
 
 
 // Typography
@@ -248,7 +248,7 @@
 @warningBackground:       #fcf8e3;
 @warningBorder:           darken(spin(@warningBackground, -10), 3%);
 
-@errorText:               #b94a48;
+@errorText:               @red;
 @errorBackground:         #f2dede;
 @errorBorder:             darken(spin(@errorBackground, -10), 3%);
 
@@ -316,7 +316,5 @@
 
 // Custom variables
 // -------------------------
-@brand:                 			#0881C2;
-@orange:                			#CA5400;
 @bulletBackground:      			lighten(@orange, 12%);
 @listIndent:						@baseLineHeight;

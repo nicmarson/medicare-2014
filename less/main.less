@@ -38,6 +38,22 @@ h3 {
   text-shadow: 0 0 1px rgba(0,0,0,.1); // Helps text rendering on Windows
 }
 
+
+.alert {
+  background-color: transparent;
+}
+
+
+.dropdown-menu {
+  color: @black;
+}
+
+
+.breadcrumb > li > .divider {
+  color: @gray;
+}
+
+
 // Orange Square Bullets
 ul.bulleted li {
   margin: @baseLineHeight / 2 0;
@@ -102,6 +118,20 @@ nav.toplevel {
   }
 }
 
+
+#nav {
+  font-size: 16px;
+
+  .nav > li > a {
+    font-weight: 700;
+  }
+}
+
+
+.navbar-inverse .navbar-inner {
+  color: @white;
+}
+
 // Hero with image
 .hero-image {
   padding: 0;
@@ -110,12 +140,12 @@ nav.toplevel {
 
 // Medicare Hero
 .hero-medicare {
-  background-color: #5A8396;
+  background-color: #0064cd;
   background-position: right top;
   background-repeat: no-repeat;
+  color: @white;
 
   h1 {
-    color: @white;
     font-size: 40px;
     line-height: 40px;
 
@@ -129,19 +159,6 @@ nav.toplevel {
     height: 120px;
     padding-right: 365px;
     padding-top: 20px;
-    text-align: right;
-  }
-}
-.medicare-about {
-  
-  .hero-medicare {
-    background-image: url("http://www.regence.com/medicare/images/info-education.gif");
-  }
-}
-.medicare-forms {
-  
-  .hero-medicare {
-    background-image: url("http://www.regence.com/medicare/images/request-literature.jpg");
   }
 }
 .medicare-home {
@@ -150,26 +167,80 @@ nav.toplevel {
     background-image: url("http://www.regence.com/medicare/images/homebox-bg.jpg");
   }
 }
-.medicare-medadvantage {
-
-  .hero-medicare {
-    background-image: url("http://www.regence.com/medicare/images/coverage-medadvantage.gif");
-  }
-}
-.medicare-members {
-
-  .hero-medicare {
-    background-image: url("http://www.regence.com/medicare/images/info-sharethewell.gif");
-  }
-}
 
 
 // Button Containers
 .btn-container-bottom {
-  padding-bottom: 45px;
+  padding-bottom: 40px;
   position: relative;
 }
 .btn-block {
   padding-left: 15px;
   text-align: left;
+}
+
+
+// Learn - Shop - Help
+.nav-shopping {
+
+  .nav-pills {
+    margin-bottom: 0;
+  }
+  .nav-pills > li > a {
+    border: 1px solid;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 12px 15px;
+  }
+  .nav-pills > li > a small {
+    font-size: 16px;
+  }
+  .nav-pills > .learn > a {
+    color: #076da5;
+  }
+  .nav-pills > .learn.active > a,
+  .nav-pills > .learn.active > a:hover {
+    background-color: #076da5;
+  }
+  .nav-pills > .shop > a {
+    color: #724aa3;
+  }
+  .nav-pills > .shop.active > a,
+  .nav-pills > .shop.active > a:hover {
+    background-color: #724aa3;
+  }
+  .nav-pills > .help > a {
+    color: #197b37;
+  }
+  .nav-pills > .help.active > a,
+  .nav-pills > .help.active > a:hover {
+    background-color: #197b37;
+  }
+  .nav-pills > .active > a,
+  .nav-pills > .active > a:hover {
+    color: #ffffff;
+  }
+  .tab-pane {
+    border: 1px solid;
+    padding: 15px;
+  }
+  #learn {
+    border-color: #0881c2;
+  }
+  #learn h4 {
+    color: #076da5;
+  }
+  #shop {
+    border-color: #916dbd;
+  }
+  #shop h4 {
+    color: #724aa3;
+  }
+  #help {
+    border-color: #1e9442;
+  }
+  #help h4 {
+    color: #197b37;
+  }
 }

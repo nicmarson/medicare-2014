@@ -46,7 +46,7 @@ h1 {
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 h2 {
-  color: #ca5400;
+  color: #b94d00;
   font-size: 28px;
   line-height: 36px;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
@@ -55,6 +55,15 @@ h3 {
   font-size: 20px;
   line-height: 26px;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.alert {
+  background-color: transparent;
+}
+.dropdown-menu {
+  color: #000000;
+}
+.breadcrumb > li > .divider {
+  color: #555555;
 }
 ul.bulleted li {
   margin: 10px 0;
@@ -67,7 +76,7 @@ ul.bulleted > li {
   position: relative;
 }
 .generatedcontent ul.bulleted > li:before {
-  background: #ff6f08;
+  background: #f66600;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -112,17 +121,26 @@ nav.toplevel li > a:hover {
   margin: 0;
   padding-left: 10px;
 }
+#nav {
+  font-size: 16px;
+}
+#nav .nav > li > a {
+  font-weight: 700;
+}
+.navbar-inverse .navbar-inner {
+  color: #ffffff;
+}
 .hero-image {
   padding: 0;
   position: relative;
 }
 .hero-medicare {
-  background-color: #5A8396;
+  background-color: #0064cd;
   background-position: right top;
   background-repeat: no-repeat;
+  color: #ffffff;
 }
 .hero-medicare h1 {
-  color: #ffffff;
   font-size: 40px;
   line-height: 40px;
 }
@@ -135,28 +153,75 @@ nav.toplevel li > a:hover {
   height: 120px;
   padding-right: 365px;
   padding-top: 20px;
-  text-align: right;
-}
-.medicare-about .hero-medicare {
-  background-image: url("http://www.regence.com/medicare/images/info-education.gif");
-}
-.medicare-forms .hero-medicare {
-  background-image: url("http://www.regence.com/medicare/images/request-literature.jpg");
 }
 .medicare-home .hero-medicare {
   background-image: url("http://www.regence.com/medicare/images/homebox-bg.jpg");
 }
-.medicare-medadvantage .hero-medicare {
-  background-image: url("http://www.regence.com/medicare/images/coverage-medadvantage.gif");
-}
-.medicare-members .hero-medicare {
-  background-image: url("http://www.regence.com/medicare/images/info-sharethewell.gif");
-}
 .btn-container-bottom {
-  padding-bottom: 45px;
+  padding-bottom: 40px;
   position: relative;
 }
 .btn-block {
   padding-left: 15px;
   text-align: left;
+}
+.nav-shopping .nav-pills {
+  margin-bottom: 0;
+}
+.nav-shopping .nav-pills > li > a {
+  border: 1px solid;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 24px;
+  padding: 12px 15px;
+}
+.nav-shopping .nav-pills > li > a small {
+  font-size: 16px;
+}
+.nav-shopping .nav-pills > .learn > a {
+  color: #076da5;
+}
+.nav-shopping .nav-pills > .learn.active > a,
+.nav-shopping .nav-pills > .learn.active > a:hover {
+  background-color: #076da5;
+}
+.nav-shopping .nav-pills > .shop > a {
+  color: #724aa3;
+}
+.nav-shopping .nav-pills > .shop.active > a,
+.nav-shopping .nav-pills > .shop.active > a:hover {
+  background-color: #724aa3;
+}
+.nav-shopping .nav-pills > .help > a {
+  color: #197b37;
+}
+.nav-shopping .nav-pills > .help.active > a,
+.nav-shopping .nav-pills > .help.active > a:hover {
+  background-color: #197b37;
+}
+.nav-shopping .nav-pills > .active > a,
+.nav-shopping .nav-pills > .active > a:hover {
+  color: #ffffff;
+}
+.nav-shopping .tab-pane {
+  border: 1px solid;
+  padding: 15px;
+}
+.nav-shopping #learn {
+  border-color: #0881c2;
+}
+.nav-shopping #learn h4 {
+  color: #076da5;
+}
+.nav-shopping #shop {
+  border-color: #916dbd;
+}
+.nav-shopping #shop h4 {
+  color: #724aa3;
+}
+.nav-shopping #help {
+  border-color: #1e9442;
+}
+.nav-shopping #help h4 {
+  color: #197b37;
 }
