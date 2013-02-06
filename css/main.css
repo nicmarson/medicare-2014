@@ -105,6 +105,10 @@ nav.toplevel li > a:hover {
   text-align: right;
   top: 0;
 }
+.nav-phone li {
+  display: inline;
+  list-style: none;
+}
 .lt-ie9 .nav-phone {
   width: 30em;
 }
@@ -151,8 +155,7 @@ nav.toplevel li > a:hover {
 }
 .hero-medicare .hero-inner {
   height: 120px;
-  padding-right: 365px;
-  padding-top: 20px;
+  padding: 20px 335px 0 15px;
 }
 .medicare-home .hero-medicare {
   background-image: url("http://www.regence.com/medicare/images/homebox-bg.jpg");

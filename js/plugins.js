@@ -2,7 +2,7 @@
 
 /*-------------------------------------------------------------------- 
  * JQuery Plugin: "EqualHeights" & "EqualWidths"
- * by:	Chris Coyier
+ * by:  Chris Coyier
  *
  * http://css-tricks.com/equal-height-blocks-in-rows/
 --------------------------------------------------------------------*/
@@ -53,5 +53,15 @@ $(function() {
     left: 0,
     position: "absolute"
   });
+
+  $('ol.breadcrumb a').after(' <span class="divider" role="separator">/</span>');
+
+  $('[data-toggle="collapse"], [data-toggle="dropdown"]').append(' <b class="caret"></b>');
+
+  $('nav#nav div.container').prepend('<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">'+
+    '<span class="icon-bar"></span>'+
+    '<span class="icon-bar"></span>'+
+    '<span class="icon-bar"></span>'+
+  '</a>');
 
 });
