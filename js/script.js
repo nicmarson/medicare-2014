@@ -8,12 +8,28 @@
 
 
 $(function() {
- 	//setCookie('ZIP',"97217",90);
- 	//setCookie('PLANCODE',"OR",90);
 	
-	// Instance the Data Model
-	var demographicsDataModel = new Demographics();
-	demographicsDataModel = setDataModelValues(demographicsDataModel);
+	
+		setCookie('ZIP',"97217",90);
+ 	setCookie('PLANCODE',"OR",90);
+	
+	// Set the jumpMenu event, this is awful.
+	$('#jumpMenu').change(function(){
+		jumpMenu($(this).val());
+	});
+	
+	// Instance the Data Models
+	var demographicsDataModel 	= new Demographics();
+	var cookieMapDataModel 		= new CookieMap();
+	
+	
+	demographicsDataModel = setDataModel(demographicsDataModel, {
+		'values': 	
+	});
+	
+// 	demographicsDataModel = setDataModel(demographicsDataModel, {
+// 		'cookie': true;
+// 	});
 	
 	// Show or Hide Content based on Datamodel
 	setProductToggle(demographicsDataModel);
@@ -62,6 +78,31 @@ function Demographics(){
 }
 
 /***********
+*	@name:			CookieMap()
+*	@description:	Map cookies to Demographics data model
+*
+*	@param: 		N/A
+*	@returns: 		true;
+***********/
+function CookieMap(){
+	this.exp = false;
+	this.keepMe = false; 
+	this.alreadyMedicare = false;
+	this.coverage = false; // Coverage year
+	this.planValue = false; // State identification
+	this.county = false; // County name
+	this.serviceArea = false; // Default will use planValue, otherwise will overwrite planValue
+	this.zip = false; // Zip code
+	this.age = false; // Age
+	this.gender = false; // Gender
+	this.plancode = false; // Asuris or non-asuris 
+	this.state = false; // state identifier
+	this.offerMedAdvantage = false;
+	this.offerMedigap = false;
+	return;
+}
+
+/***********
 *	@name:			setDataModelValues()
 *	@description:	Set Data Model Values from Cookies if the cookies Exist.
 *
@@ -69,18 +110,36 @@ function Demographics(){
 *
 *	@returns: 		(string|false)	Requested Cookie Value
 ***********/
-function setDataModelValues(dataModel){
+function setDataModel(dataModel, options){
+	
+	var map	= typeof(options.values) 		!= 'undefined'	? options.values 		: false;
+	var map	= typeof(options.map) 			!= 'undefined'	? options.map 		: false;
+	var cookie	= typeof(options.cookie) 	!= 'undefined'	? options.cookie 	: false;
+	
+	// 	if (typeof(params) == 'undefined'){
+	// 		alert("setDataModel requires parameters")
+	// 		return false;
+	// 	}
+	
+	//if (typeof(params.dataModel) == 'undefined' && typeof(params) == 'object'){
+	//	alert(typeof(params));
+	//	var dataModel = params;
+	//}
+	
 	dataModel.zip = getCookie('ZIP');
 	
+	$.each(dataModel, function(dataModelItem, dataModelValue){
+		
+		
+		if (map){
+			$.each(map, function(mapItem, mapValue){
+				
+			});
+		}
+		//console.log(item, value);
+	});
+	
 	return dataModel;
-	//   // set value to already Medicare field
-	//   if ( $("input[name=onMedicare]").is(':checked') ) {
-	//     $("input[name=onMedicare]").val('on');
-	//     alreadyMedicare = 'on';
-	//   } else {
-	//     alreadyMedicare = 'off';
-	//   }
-// 	var cookieString = "{'zip':'" + zip + "','age':'" + age + "', 'state':'" + state + "', 'county':'" + county + "', 'serviceArea':'" + serviceArea + "', 'gender':'" + gender + "', 'offerMedAdvantage':'" + offerMedAdvantage + "', 'offerMedigap':'" + offerMedigap + "', 'coverage':'" + coverage + "', 'onMedicare':'" + alreadyMedicare + "', 'plancode':'" + plancode + "', 'rememberMe':'" + keepMe + "'}";
 }
 
 
@@ -232,12 +291,16 @@ function attachDemographicsForm(dataModel){
 				} else {
 				  $("#state").val(planValue);
 				}
-
+				
+				setCookie('ZIP', ( zipcode ), 0);
+				
 				// hide the county selection
 				if (planValue != 'ASURIS' && planValue != 'ERROR'){
 				  var counties = [];
 				  // Clark County returns OR although we want the county list from WARBS
-				  if (area == 'clark_co'){planValue = 'WARBS'; if(debug){alert('returning clark county');}} 
+				  if (area == 'clark_co'){
+				  	planValue = 'WARBS'; //if(debug){alert('returning clark county');}
+				  } 
 				  counties = $(this).getCountyList(planValue);
 				  var send_data = { 'collection':counties };
 				  createCountyList(send_data);
@@ -337,7 +400,8 @@ function attachDemographicsForm(dataModel){
 	
 	$('#demographicSaveButton').click(function(){
 		// Please refactor this to fence it. DOES TOO MUCH.
-		setFormSubmitHandler('/medicare/index.jsp', 'false', 'medicareBasic');
+		//setFormSubmitHandler('/medicare/index.jsp', 'false', 'medicareBasic');
+		setFormSubmitHandler('/medicare-2014/index-2014.html', 'false', 'medicareBasic');
 		//$('#getQuoteForm').submit();
 	});
 	
@@ -388,22 +452,26 @@ function attachDemographicsForm(dataModel){
 		var coverageLoc = $("input[name='coverage']:checked").val();
 		var age     = $("#age").val();
 
-		alert($("#state").val());
+		
 
 		// Everything checks out, set our cookie
 		setCookieString();
 
 		// direct page
 		partDonly(action); // This will redirect users to another page if only part D is offered for their region
+		
+		var z = getCookie('ZIP');
+		alert(z);
+		var planValue = getCookie("PLANCODE");
 		if ( formValidated == false) {
 			return false;
 		}else if ( file == "true"){
 			// if we are linking to a file
 			// replace PLANCODE in the link
 			if (planValue == 'WARBS'){planValue = 'WA'}
-			setCookie("ZIPCODE", z, expires: 0 );
+			setCookie("ZIPCODE", z, 0 );
 			action = action.replace(/PLANCODE/i, planValue);
-			window.location = action;
+			//window.location = action;
 			return false;
 		} else {
 			// set plancode cookie
@@ -413,14 +481,13 @@ function attachDemographicsForm(dataModel){
 			} else {
 			cookie_data = planValue;
 			}
-			if(debug){log("Cookie data being passed to PLANCODE:\n"+cookie_data)}
-			setCookie("PLANCODE", ( cookie_data ), expires: 0 );
-			setCookie("ZIPCODE", z,  expires: 0 );
-			setCookie("county", countyValue, expires: 0 );
+			//if(debug){log("Cookie data being passed to PLANCODE:\n"+cookie_data)}
+			setCookie("PLANCODE", ( cookie_data ), 0 );
+			setCookie("ZIPCODE", z,  0 );
+			setCookie("county", countyValue, 0 );
 			setCookieString();
-
 			var url = "/medicare/"+coverageLoc+"?"+$("#getQuoteForm").serialize();
-			window.location = url;
+			//window.location = url;
 		}
 	}
 // 	  });
@@ -432,13 +499,13 @@ function attachDemographicsForm(dataModel){
 	  var medigap = c['offerMedigap'];
 	  var medadvantage = c['offerMedAdvantage'];
 	  if ( medigap == 'false' && medadvantage == 'false'){
-		if(debug){alert("partD only offered");}
+		//if(debug){alert("partD only offered");}
 		if (action == '/medicare/shop.jsp' ){
 		  action = '/medicare/part-d/index.jsp'; // we'll skip the shop page since only part D is offered in this region
-		  if(debug){alert("action being set to "+action);}
+		  //if(debug){alert("action being set to "+action);}
 		}
 		var url = action+"?"+$("#getQuoteForm").serialize();
-		if(debug){alert("full url being set to "+url);}
+		//if(debug){alert("full url being set to "+url);}
 		formValidated = false;
 		window.location = url;
 	
@@ -447,58 +514,59 @@ function attachDemographicsForm(dataModel){
 	  }
 	}
 	
-	// Set the Cookie String Data
 	function setCookieString() {
-	  var exp;
-	  var keepMe; 
-	  var alreadyMedicare;
-	  var coverage = $("input[name=coverage]:checked").val(); // Coverage year
-	  var planValue = getCookie("PLANCODE"); // State identification
-	  var county = $("#counties").val(); // County name
-	  var serviceArea = $("#serviceArea").val(); // Default will use planValue, otherwise will overwrite planValue
-	  var zip = $("#ZipCode").val(); // Zip code
-	  var age = $("#age").val(); // Age
-	  var gender = $("#gender").val(); // Gender
-	  var plancode = $("#plancode").val(); // Asuris or non-asuris 
-	  var state = $("#state").val(); // state identifier
-	  var offerMedAdvantage = $("#offerMedAdvantage").val();
-	  var offerMedigap = $("#offerMedigap").val();
-  
-	  // Remember user sets the expiration days of cookie
-	  if ( $("input[name=keepMe]").is(':checked') ) {
+		var exp;
+		var keepMe; 
+		var alreadyMedicare;
+		var coverage = $("input[name=coverage]:checked").val(); // Coverage year
+		var planValue = getCookie("PLANCODE"); // State identification
+		var county = $("#counties").val(); // County name
+		var serviceArea = $("#serviceArea").val(); // Default will use planValue, otherwise will overwrite planValue
+		var zip = $("#ZipCode").val(); // Zip code
+		var age = $("#age").val(); // Age
+		var gender = $("#gender").val(); // Gender
+		var plancode = $("#plancode").val(); // Asuris or non-asuris 
+		var state = $("#state").val(); // state identifier
+		var offerMedAdvantage = $("#offerMedAdvantage").val();
+		var offerMedigap = $("#offerMedigap").val();
+
+		// Remember user sets the expiration days of cookie
+		if ( $("input[name=keepMe]").is(':checked') ) {
 		exp = 90; // Remember user
 		$("input[name=keepMe]").val('on');
 		keepMe = 'on';
-	  } else {
+		} else {
 		exp = 0; // Do not remember user
 		keepMe = 'off';
-	  }
-  
-	  // set value to already Medicare field
-	  if ( $("input[name=onMedicare]").is(':checked') ) {
+		}
+
+		// set value to already Medicare field
+		if ( $("input[name=onMedicare]").is(':checked') ) {
 		$("input[name=onMedicare]").val('on');
 		alreadyMedicare = 'on';
-	  } else {
+		} else {
 		alreadyMedicare = 'off';
-	  }
+		}
+
+		var cookieString = "{'zip':'" + zip + "','age':'" + age + "', 'state':'" + state + "', 'county':'" + county + "', 'serviceArea':'" + serviceArea + "', 'gender':'" + gender + "', 'offerMedAdvantage':'" + offerMedAdvantage + "', 'offerMedigap':'" + offerMedigap + "', 'coverage':'" + coverage + "', 'onMedicare':'" + alreadyMedicare + "', 'plancode':'" + plancode + "', 'rememberMe':'" + keepMe + "'}";
+
   
   
-  
-	  // Demographics cookie
-	  setCookie("demographics", ( cookieString ), expires: exp );
-  
-	  // Plancode coookie 
-	  setCookie("PLANCODE", ( planValue ), expires: exp );
-  
-	  // SALO: the medigap pages are still using these cookies, annoying... 
-	  // need to set them here to navigate from medAdvantage to medigap
-	  var zip; var age; var gender;
-	  zip = $('#ZipCode').val();
-	  age = $('#age').val();
-	  gender = $('#gender').val();
-	  setCookie('age0', ( age ), expires: 0);
-	  setCookie('ZIP', ( zip ), expires: 0);
-	  setCookie('gender0', ( gender ), expires: 0);
+		// Demographics cookie
+		setCookie("demographics", ( cookieString ), exp );
+
+		// Plancode coookie 
+		setCookie("PLANCODE", ( planValue ), exp );
+
+		// SALO: the medigap pages are still using these cookies, annoying... 
+		// need to set them here to navigate from medAdvantage to medigap
+		var zip; var age; var gender;
+		zip = $('#ZipCode').val();
+		age = $('#age').val();
+		gender = $('#gender').val();
+		setCookie('age0', ( age ), 0);
+		setCookie('ZIP', ( zip ), 0);
+		setCookie('gender0', ( gender ), 0);
 	}
 	
 	// Show the main spinner for submitting form
@@ -584,6 +652,7 @@ function getCookie(cookieName){
 *	@returns: 		(string|false)	Requested Cookie Value
 ***********/
 function setCookie(cookieName, cookieValue, exp){
+	console.log(cookieName + ', ' + cookieValue + ', ' + exp);
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + exp);
 	var c_value=escape(cookieValue) + ((exp==null) ? "" : "; expires="+exdate.toUTCString());
@@ -663,8 +732,8 @@ function setProductToggle(dataModel) {
     var c = eval('(' + getCookie("demographics") + ')');
     var medigap = c['offerMedigap'];
     var medadvantage = c['offerMedAdvantage'];
-    if (debug){log('medigap is set to ' + medigap);}
-    if (debug){log('medadvantage is set to ' + medadvantage);}
+    //if (debug){log('medigap is set to ' + medigap);}
+    //if (debug){log('medadvantage is set to ' + medadvantage);}
     
     // css for these are set by default to display:none;
     if (medigap == 'false' && medadvantage == 'false'){
@@ -792,9 +861,9 @@ function setFormValues(dataModel) {
     var countyList = [];
     var state = c['state'];
 
-    if(debug){
-      alert('state is returning: '+state);
-    }
+   //  if(debug){
+//       alert('state is returning: '+state);
+//     }
     if (typeof(state) == "undefined" || state == '') {
       state=pCode;
     }
@@ -905,3 +974,18 @@ function showSpinner() {
   $("#cboxTitle").attr('style','visibility:hidden');
 }
 
+
+/***********
+*	@name:			jumpMenu()
+*	@description:	Silly little Menu. Seriously, this is very 1996
+*
+*	@param: 		(string) 		message Error Message
+*	@param: 		(string) 		location Location, Really? The location is not even used very much. Shouldn't all elements be consistant?
+*	@returns: 		N/A
+*
+*	@TODO:			Change this whole thing, really honestly. IT WAS A MACROMEDIA JAVASCRIPT. ::HEADDESK::
+*
+***********/
+function jumpMenu(location){
+  window.location = location;
+}
