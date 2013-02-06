@@ -10,8 +10,8 @@
 $(function() {
 	
 	
-		setCookie('ZIP',"97217",90);
- 	setCookie('PLANCODE',"OR",90);
+// 		setCookie('ZIP',"97217",90);
+//  	setCookie('PLANCODE',"OR",90);
 	
 	// Set the jumpMenu event, this is awful.
 	$('#jumpMenu').change(function(){
@@ -22,23 +22,19 @@ $(function() {
 	var demographicsDataModel 	= new Demographics();
 	var cookieMapDataModel 		= new CookieMap();
 	
-	
-	demographicsDataModel = setDataModel(demographicsDataModel, {
-		'values': 	
-	});
-	
-// 	demographicsDataModel = setDataModel(demographicsDataModel, {
-// 		'cookie': true;
-// 	});
+ 	demographicsDataModel = setDataModel(demographicsDataModel, {
+ 		'map'		: cookieMapDataModel,
+ 		'cookie'	: true
+ 	});
 	
 	// Show or Hide Content based on Datamodel
 	setProductToggle(demographicsDataModel);
 	
-	//Check Data Model Existence or Display Modal for info
-	displayInitialModal(demographicsDataModel);
-	
 	// Event Binding Setup for Demographics Form, will call other functions
 	attachDemographicsForm(demographicsDataModel);
+	
+	//Check Data Model Existence or Display Modal for info
+	displayInitialModal(demographicsDataModel);
 	
 	// Event Binding Setup for External Site Links.
 	attachExternalSite();
@@ -60,20 +56,20 @@ $(function() {
 *	@returns: 		true;
 ***********/
 function Demographics(){
-	this.exp = false;
-	this.keepMe = false; 
-	this.alreadyMedicare = false;
-	this.coverage = false; // Coverage year
-	this.planValue = false; // State identification
-	this.county = false; // County name
-	this.serviceArea = false; // Default will use planValue, otherwise will overwrite planValue
-	this.zip = false; // Zip code
-	this.age = false; // Age
-	this.gender = false; // Gender
-	this.plancode = false; // Asuris or non-asuris 
-	this.state = false; // state identifier
-	this.offerMedAdvantage = false;
-	this.offerMedigap = false;
+	this.exp				= false;
+	this.keepMe				= false; 
+	this.alreadyMedicare	= false;
+	this.coverage			= false; // Coverage year
+	this.planValue			= false; // State identification
+	this.county				= false; // County name
+	this.serviceArea		= false; // Default will use planValue, otherwise will overwrite planValue
+	this.zip				= false; // Zip code
+	this.age				= false; // Age
+	this.gender				= false; // Gender
+	this.plancode			= false; // Asuris or non-asuris 
+	this.state				= false; // state identifier
+	this.offerMedAdvantage	= false;
+	this.offerMedigap		= false;
 	return;
 }
 
@@ -85,37 +81,35 @@ function Demographics(){
 *	@returns: 		true;
 ***********/
 function CookieMap(){
-	this.exp = false;
-	this.keepMe = false; 
-	this.alreadyMedicare = false;
-	this.coverage = false; // Coverage year
-	this.planValue = false; // State identification
-	this.county = false; // County name
-	this.serviceArea = false; // Default will use planValue, otherwise will overwrite planValue
-	this.zip = false; // Zip code
-	this.age = false; // Age
-	this.gender = false; // Gender
-	this.plancode = false; // Asuris or non-asuris 
-	this.state = false; // state identifier
-	this.offerMedAdvantage = false;
-	this.offerMedigap = false;
+	this.PLANCODE	= 'planValue';
+	this.ZIP		= 'zip';
+	this.ZIPCODE	= 'zip';
+	this.age0		= 'age';
+	this.gender0	= 'gender';
 	return;
 }
 
 /***********
-*	@name:			setDataModelValues()
+*	@name:			setDataModel()
 *	@description:	Set Data Model Values from Cookies if the cookies Exist.
 *
 *	@param: 		(string) 		dataModel 	Data Model to Build Into
 *
 *	@returns: 		(string|false)	Requested Cookie Value
+*
+*	@TODO:			Can this be used as a prototype method of the datamodel object, allowing datamodels to be generated on the
+*					Fly as part of a core model set? Must research this, use case extreme, build prototyped modelset.
 ***********/
 function setDataModel(dataModel, options){
 	
-	var map	= typeof(options.values) 		!= 'undefined'	? options.values 		: false;
-	var map	= typeof(options.map) 			!= 'undefined'	? options.map 		: false;
+	var values	= typeof(options.values) 	!= 'undefined'	? options.values 	: false;
+	var map		= typeof(options.map) 		!= 'undefined'	? options.map 		: false;
 	var cookie	= typeof(options.cookie) 	!= 'undefined'	? options.cookie 	: false;
 	
+	
+	console.log(values);
+	console.log(map);
+	console.log(cookie);
 	// 	if (typeof(params) == 'undefined'){
 	// 		alert("setDataModel requires parameters")
 	// 		return false;
@@ -128,20 +122,87 @@ function setDataModel(dataModel, options){
 	
 	dataModel.zip = getCookie('ZIP');
 	
-	$.each(dataModel, function(dataModelItem, dataModelValue){
-		
-		
-		if (map){
-			$.each(map, function(mapItem, mapValue){
-				
-			});
-		}
-		//console.log(item, value);
-	});
+	newDataModel = new Object;
 	
-	return dataModel;
+	// Evaluate existing Data Model and Get new values and put them in "newDataModel" to replace old.
+	$.each(dataModel, function(dataModelKey, dataModelValue){
+		if (values){
+			if (typeof(values[dataModelKey]) != 'undefined')
+			{
+				newDataModel[dataModelKey] = values[dataModelKey];
+			}else{
+				newDataModel[dataModelKey] = false;
+			}
+		}
+		
+		if (cookie){
+			newDataModel[dataModelKey] = getCookie(dataModelKey);
+			if (map){
+				$.each(map, function(mapKey, mapValue){
+					if (mapValue == dataModelKey && getCookie(mapKey)){
+						newDataModel[dataModelKey] = getCookie(mapKey);
+					}
+				});
+			}
+		}
+	});
+	return newDataModel;
 }
 
+
+/***********
+*	@name:			setCookiesFromDataModel()
+*	@description:	Set Cookies From Datamodel and use Map if needed.
+*
+*	@param: 		(string) 		data Model	 	Data Model to Build Cookies Form
+*	@param: 		(object) 		options 		Object Containing Optional Params (Not Used)
+*
+*	@returns: 		(string|false)	
+*
+*	@TODO			Might be value in rolling this in as a polymorphic function of the basic set cookie. 
+***********/
+// function setCookiesFromDataModel(dataModel, options){
+// 	
+// 	var values	= typeof(options.values) 	!= 'undefined'	? options.values 	: false;
+// 	var map		= typeof(options.map) 		!= 'undefined'	? options.map 		: false;
+// 	
+// 	
+// 	$.each(dataModel, function(dataModelKey, dataModelValue){
+// 			
+// 			newDataModel[dataModelKey] = getCookie(dataModelKey);
+// 			if (map){
+// 				$.each(map, function(mapKey, mapValue){
+// 					if (mapValue == dataModelKey && getCookie(mapKey)){
+// 						newDataModel[dataModelKey] = getCookie(mapKey);
+// 					}
+// 				});
+// 			}
+// 		}
+// 	});
+// 	
+// 	return;
+// }
+
+
+/***********
+*	@name:			setCookies()
+*	@description:	Multiple Cookies at one time
+*
+*	@param: 		(string) 		keyValuePairs 	Key Values to make cookies.
+*	@param: 		(object) 		options 		Object Containing Optional Params (Not Used)
+*
+*	@returns: 		(string|false)	
+*
+*	@TODO			Might be value in rolling this in as a polymorphic function of the basic set cookie. 
+***********/
+function setCookies(keyValuePairs, options){
+	
+	$.each(keyValuePairs, function(key, value){
+		setCookie(key,value,90);
+	});
+	
+	return;
+}
 
 
 
@@ -240,7 +301,6 @@ function attachDemographicsForm(dataModel){
 	*	@TODO			Get it DONE No more "Temporary Fixes" There is no such thing.
 	***********/
 	function handleZip(zipcode) {
-		var zipCookie = getCookie('ZIP');
 		
 		// 	Annoying little Debug thing because using Teamsite would drive me crazy, 
 		//	pull before production.....Tara I am looking at you.
@@ -252,7 +312,6 @@ function attachDemographicsForm(dataModel){
 			var planCodeURL = '/planCodeService.do';
 		}
 
-		
 		// Get the plan value from planCodeService.do
 		// Returns xml w/ plancode & area
 		// DOES TOO MUCH!
@@ -266,11 +325,12 @@ function attachDemographicsForm(dataModel){
 		});
 		planCodeAjax.done(function(data){
 			//console.log(data);
+			console.log(dataModel)
 			$(data).find("plancode").each(function(){
-				var planValue = $(this).find('value').text();
-				var area    = $(this).find('area').text();
+				var planValue 	= $(this).find('value').text();
+				var area    	= $(this).find('area').text();
 				var errorValue  = $(this).find('error').text();
-				var age     = $("#age").val();
+				//var age     	= $("#age").val();
 				
 				// Asotin county medicare products are provided by ID and not ASURIS 
 				if ( zipcode == "99401" || zipcode == "99402" || zipcode == "99403" ) {
@@ -279,7 +339,7 @@ function attachDemographicsForm(dataModel){
 				}
 
 				$("#planvalue").val(planValue); // Set planValue
-
+			
 				validatePlanValue(planValue, errorValue);
 				if ( formValidated == false) {
 				  return false;
@@ -292,7 +352,13 @@ function attachDemographicsForm(dataModel){
 				  $("#state").val(planValue);
 				}
 				
-				setCookie('ZIP', ( zipcode ), 0);
+				
+// 				setDataModel(demographicsDataModel, {
+// 					'values': {
+// 						'zip'		: '97217',
+// 						'planValue'	: '90'
+// 					}	
+// 				});
 				
 				// hide the county selection
 				if (planValue != 'ASURIS' && planValue != 'ERROR'){
@@ -625,7 +691,16 @@ function displayInitialModal(dataModel){
 function getCookie(cookieName){
 	var i,x,y,ARRcookies=document.cookie.split(";");
 	if(typeof(cookieName) == 'undefined'){
-		return ARRcookies;
+		var cookies = []
+		for (i=0;i<ARRcookies.length;i++)
+		{
+			x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+			y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+			x=x.replace(/^\s+|\s+$/g,"");
+			cookies[x] = unescape(y);
+
+		}
+		return cookies
 	}else{
 		for (i=0;i<ARRcookies.length;i++)
 		{
@@ -651,12 +726,15 @@ function getCookie(cookieName){
 *
 *	@returns: 		(string|false)	Requested Cookie Value
 ***********/
-function setCookie(cookieName, cookieValue, exp){
-	console.log(cookieName + ', ' + cookieValue + ', ' + exp);
-	var exdate=new Date();
-	exdate.setDate(exdate.getDate() + exp);
-	var c_value=escape(cookieValue) + ((exp==null) ? "" : "; expires="+exdate.toUTCString());
-	document.cookie=cookieName + "=" + c_value + "; path=/";
+function setCookie(name,value,days) {
+	console.log(name + ', ' + value + ', ' + days);
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
 }
 
 // Possibly not used.
@@ -668,7 +746,7 @@ function setCookie(cookieName, cookieValue, exp){
 *	@returns: 		(string|false)	Requested Cookie Value
 ***********/
 function checkCookie(cookieName){
-	console.log(document.cookie);
+	//console.log(document.cookie);
 	var i,x,y,ARRcookies=document.cookie.split(";");
 	for (i=0;i<ARRcookies.length;i++)
 	{
