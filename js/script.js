@@ -4,6 +4,8 @@
 * Author	Tara Grieb and Unnamed Uncountable Legacy Coders
 * Thought	There are no temporary fixes, just permanent patches.
 *
+*	@TODO	Come up with a better Debug method
+*
 ***********************/
 
 
@@ -70,6 +72,8 @@ function Demographics(){
 	this.state				= false; // state identifier
 	this.offerMedAdvantage	= false;
 	this.offerMedigap		= false;
+	
+	demographicsDataStorage = $('<div>',{'id': 'demographicsDataStorage'}).appendTo('body').data(this);
 	return;
 }
 
@@ -105,22 +109,6 @@ function setDataModel(dataModel, options){
 	var values	= typeof(options.values) 	!= 'undefined'	? options.values 	: false;
 	var map		= typeof(options.map) 		!= 'undefined'	? options.map 		: false;
 	var cookie	= typeof(options.cookie) 	!= 'undefined'	? options.cookie 	: false;
-	
-	
-	console.log(values);
-	console.log(map);
-	console.log(cookie);
-	// 	if (typeof(params) == 'undefined'){
-	// 		alert("setDataModel requires parameters")
-	// 		return false;
-	// 	}
-	
-	//if (typeof(params.dataModel) == 'undefined' && typeof(params) == 'object'){
-	//	alert(typeof(params));
-	//	var dataModel = params;
-	//}
-	
-	dataModel.zip = getCookie('ZIP');
 	
 	newDataModel = new Object;
 	
@@ -291,6 +279,14 @@ function attachDemographicsForm(dataModel){
 		}
 	});
 	
+	$('#demographicSaveButton').click(function(){
+		//setFormSubmitHandler('/medicare/index.jsp', 'false', 'medicareBasic');
+		setFormSubmitHandler('/medicare-2014/index-2014.html', dataModel);
+	});
+	
+	
+	
+	
 	/***********
 	*	@name:			handleZip()
 	*	@description:	Internal Function get data from the zip
@@ -334,11 +330,11 @@ function attachDemographicsForm(dataModel){
 				
 				// Asotin county medicare products are provided by ID and not ASURIS 
 				if ( zipcode == "99401" || zipcode == "99402" || zipcode == "99403" ) {
-				  planValue = 'WARBS';
-				  area = 'id';
+					planValue = 'WARBS';
+					area = 'id';
 				}
 
-				$("#planvalue").val(planValue); // Set planValue
+				
 			
 				validatePlanValue(planValue, errorValue);
 				if ( formValidated == false) {
@@ -351,47 +347,38 @@ function attachDemographicsForm(dataModel){
 				} else {
 				  $("#state").val(planValue);
 				}
-				
-				
-// 				setDataModel(demographicsDataModel, {
-// 					'values': {
-// 						'zip'		: '97217',
-// 						'planValue'	: '90'
-// 					}	
-// 				});
-				
+
 				// hide the county selection
 				if (planValue != 'ASURIS' && planValue != 'ERROR'){
-				  var counties = [];
-				  // Clark County returns OR although we want the county list from WARBS
-				  if (area == 'clark_co'){
-				  	planValue = 'WARBS'; //if(debug){alert('returning clark county');}
-				  } 
-				  counties = $(this).getCountyList(planValue);
-				  var send_data = { 'collection':counties };
-				  createCountyList(send_data);
+					var counties = [];
+					// Clark County returns OR although we want the county list from WARBS
+					if (area == 'clark_co'){
+						planValue = 'WARBS'; //if(debug){alert('returning clark county');}
+					} 
+					counties = getCountyList(planValue);
+					var send_data = { 'collection':counties };
+					createCountyList(send_data);
 					
 					// Only display the dropdown if there is data, duh.
 					$('#countyDropdown').show();
-					
-				  // modify ZIP cookie
-				  //$.cookie('ZIP', ( zipcode ), {path: '/', expires: 0});
-				  setCookie('ZIP', ( zipcode ), 0);
-				  //$.cookie('PLANCODE', ( planValue ), {path: '/', expires: 0});
-				  setCookie('PLANCODE', ( planValue ), 0);
-
-				  //if (debug){
-					//var cookieZip = $.cookie("ZIP");
-					//var cookiePlancode = $.cookie("PLANCODE");
-					//if(debug){alert('ZIP cookie: \n'+cookieZip+'\n PLANCODE cookie: \n'+cookiePlancode);}
-				  //}
+					//setCookie('ZIP', ( zipcode ), 0);
+					$("#planvalue").val(planValue); // Set planValue
+					//setCookie('PLANCODE', ( planValue ), 0);
 				}
 			});
 		});
 	}
 	
-	// get county list ajax call
-	jQuery.fn.getCountyList = function (state) {
+	/***********
+	*	@name:			getCountyList()
+	*	@description:	Ajax Call to Evaluate County List XML
+	*
+	*	@param: 		(string)	state State Code for XML
+	*	@returns: 		(array)		countyList Array of counties
+	*
+	*	@TODO			Really why is this separate
+	***********/
+	function getCountyList(state) {
 	  var countyList = [];
 	  $.ajax({
 		type: 'GET',
@@ -417,10 +404,15 @@ function attachDemographicsForm(dataModel){
 	  return countyList; // returns array of county names
 	}
 	
-	// Create drop down list for counties
-	// data: 
-	// collection: array of counties and passed values
-	// selected: value of county already selected
+	/***********
+	*	@name:			createCountyList()
+	*	@description:	Create drop down list for countie
+	*
+	*	@param: 		(string)	data State Code for XML
+	*	@returns: 		N/A
+	*
+	*	@TODO			Really why is this separate
+	***********/
 	function createCountyList(data) {
 	  $('#counties').html(''); // clear
 	  var countyList = ''; //Using a string since it's much faster to collect all the values and append them once
@@ -464,17 +456,20 @@ function attachDemographicsForm(dataModel){
 	  $("#offerMedAdvantage").val(offer_medadvantage);
 	}
 	
-	$('#demographicSaveButton').click(function(){
-		// Please refactor this to fence it. DOES TOO MUCH.
-		//setFormSubmitHandler('/medicare/index.jsp', 'false', 'medicareBasic');
-		setFormSubmitHandler('/medicare-2014/index-2014.html', 'false', 'medicareBasic');
-		//$('#getQuoteForm').submit();
-	});
+
 	
-	
+	/***********
+	*	@name:			getCountyList()
+	*	@description:	Ajax Call to Evaluate County List XML
+	*
+	*	@param: 		(string)	action WOT?
+	*	@returns: 		(array)		countyList Array of counties
+	*
+	*	@TODO			Really why is this separate
+	***********/
 	// Submit Handler for the form
-	var formValidated;
-	function setFormSubmitHandler(action, file, formName) {
+	//var formValidated;
+	function setFormSubmitHandler(action, dataModel) {
 	  // Validation Rules
 // 	  var container = $('.formErrorsDemo');
 // 	  $('#getQuoteForm').validate({
@@ -510,51 +505,39 @@ function attachDemographicsForm(dataModel){
 // 		  }
 // 		},
 		//submitHandler: function(form){
-		showSpinner();
-
-		var coverageYear = $("input[name='coverage']:checked").val();
-		var countyValue = $("#counties").val();
-		var serviceArea = $("#serviceArea").val();
-		var coverageLoc = $("input[name='coverage']:checked").val();
-		var age     = $("#age").val();
-
 		
+		
+		//showSpinner();
 
-		// Everything checks out, set our cookie
-		setCookieString();
+		var coverageYear	= $("input[name='coverage']:checked").val();
+		var countyValue		= $("#counties").val();
+		var serviceArea		= $("#serviceArea").val();
+		var coverageLoc		= $("input[name='coverage']:checked").val();
+		var age				= $("#age").val();
 
 		// direct page
 		partDonly(action); // This will redirect users to another page if only part D is offered for their region
-		
-		var z = getCookie('ZIP');
-		alert(z);
-		var planValue = getCookie("PLANCODE");
+
 		if ( formValidated == false) {
-			return false;
-		}else if ( file == "true"){
-			// if we are linking to a file
-			// replace PLANCODE in the link
-			if (planValue == 'WARBS'){planValue = 'WA'}
-			setCookie("ZIPCODE", z, 0 );
-			action = action.replace(/PLANCODE/i, planValue);
-			//window.location = action;
 			return false;
 		} else {
 			// set plancode cookie
-			var cookie_data;
 			if (serviceArea != 'default'){
-			cookie_data = serviceArea;
-			} else {
-			cookie_data = planValue;
+				$('#planValue') = serviceArea;
 			}
-			//if(debug){log("Cookie data being passed to PLANCODE:\n"+cookie_data)}
-			setCookie("PLANCODE", ( cookie_data ), 0 );
-			setCookie("ZIPCODE", z,  0 );
-			setCookie("county", countyValue, 0 );
-			setCookieString();
-			var url = "/medicare/"+coverageLoc+"?"+$("#getQuoteForm").serialize();
-			//window.location = url;
+			
+			// //if(debug){log("Cookie data being passed to PLANCODE:\n"+cookie_data)}
+// 			setCookie("PLANCODE", ( cookie_data ), 0 );
+// 			setCookie("ZIPCODE", z,  0 );
+// 			setCookie("county", countyValue, 0 );
+			
+			
+			//
 		}
+		var url = "/medicare/"+coverageLoc+"?"+$("#getQuoteForm").serialize();
+		
+		setCookieString($('#getQuoteForm').serializeArray(), dataModel);
+		window.location = url;
 	}
 // 	  });
 // 	}
@@ -580,7 +563,7 @@ function attachDemographicsForm(dataModel){
 	  }
 	}
 	
-	function setCookieString() {
+	function setCookieString(formData, dataModel) {	
 		var exp;
 		var keepMe; 
 		var alreadyMedicare;
@@ -595,15 +578,50 @@ function attachDemographicsForm(dataModel){
 		var state = $("#state").val(); // state identifier
 		var offerMedAdvantage = $("#offerMedAdvantage").val();
 		var offerMedigap = $("#offerMedigap").val();
+		
+		zipCode=97217&
+		counties=Clatsop&
 
-		// Remember user sets the expiration days of cookie
+		onMedicare=on&
+		serviceArea=default&
+		state=OR&
+		offerMedigap=true&
+		offerMedAdvantage=true&
+		plancode=non-asuris&
+		a0=0&
+		plantype=unknown&
+		fromFile=&
+		g0=m&
+		r0=s&
+		t0=off&
+		fromFile=index&
+		a0=65 
+		
+		dataModel.exp					= false;
+		
+		dataModel.alreadyMedicare		= false;
+		dataModel.coverage				= formData.coverage;		// Coverage year
+		dataModel.planValue				= formData.planvalue;		// State identification
+		dataModel.county				= formData.counties;		// County name
+		dataModel.serviceArea			= formData.serviceArea;		// Default will use planValue, otherwise will overwrite planValue
+		dataModel.zip					= formData.zipCode;			// Zip code
+		dataModel.age					= formData.a0; 				// Age (id=age name=a0) WHY GOD WHY?
+		dataModel.gender				= formData.g0;				// (id=gender name=g0) WHY GOD WHY? Also No way to set this Why do we have it.
+		dataModel.plancode				= formData.plancode;		// Wait!? Is this Plan Value? Why are these used interchangeably.
+		dataModel.state					= formData.state;			// state identifier -- Or you know, State, since a name IS an identifier.
+		dataModel.offerMedAdvantage		= formData.offerMedAdvantage;
+		dataModel.offerMedigap			= formData.offerMedigap;
+		
+		
+		cdnjjdnjks
+		// Remember user sets the expiration days of cookie (THIS SHOULD NOT MAKE DOM CALLS)
 		if ( $("input[name=keepMe]").is(':checked') ) {
 		exp = 90; // Remember user
 		$("input[name=keepMe]").val('on');
-		keepMe = 'on';
+		dataModel.keepMe	= 'on'; 
 		} else {
 		exp = 0; // Do not remember user
-		keepMe = 'off';
+		dataModel.keepMe	= 'on'; 
 		}
 
 		// set value to already Medicare field
@@ -635,6 +653,151 @@ function attachDemographicsForm(dataModel){
 		setCookie('gender0', ( gender ), 0);
 	}
 	
+	// Show the main spinner for submitting form
+	function showSpinner() {
+	  $("#getQuoteForm").attr('style','visibility:hidden').before('<div class="spinner" style=""><h2>Loading...</h2></div>');
+	  $("#cboxTitle").attr('style','visibility:hidden');
+	}
+	
+	/***********
+	*	@name:			setFormValues()
+	*	@description:	Set Demographics Form Data
+	*
+	*	@param: 		(object) 		dataModel Data Model for Value checking
+	*	@returns: 		N/A
+	*
+	*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Make more open and abstract.
+	*
+	***********/
+	function setFormValues(dataModel) {
+	  if( getCookie("demographics") ) {
+		var c = eval('(' + getCookie("demographics") + ')');
+		var gender = c['gender']; 
+		var coverage = c['coverage'];
+		var county = c['county'];
+		var serviceArea = c['serviceArea'];
+		$("#gender option[value='"+gender+"']").attr('selected', 'selected'); // Set the gender
+		$("#zipCode").val(c['zip']); // Set the zip
+		$("#age").val(c['age']); // Set the age
+		$("#serviceArea").val(c['serviceArea']); // Set the serviceArea
+		$("#offerMedigap").val(c['offerMedigap']); // Offer Medigap
+		$("#offerMedAdvantage").val(c['offerMedAdvantage']); // Offer MedAdvantage
+		if (c['onMedicare'] == "on"){$("#alreadyMedicare").attr('checked', true);} // Set alreadyMedicare
+		if (c['rememberMe'] == "on"){ $("#rememberMe").attr('checked', true); } // Set remember me
+		$("#coverage"+coverage).attr('checked', 'checked'); // Set coverage selected
+
+
+		// Create the list of Counties
+		var countyList = [];
+		var state = c['state'];
+
+	   //  if(debug){
+	//       alert('state is returning: '+state);
+	//     }
+		if (typeof(state) == "undefined" || state == '') {
+		  state=pCode;
+		}
+		if (typeof(state) == "undefined" || state == '') {
+		  state=pCode;
+		}
+		countyList = getCountyList(state);
+	
+		var send_data = { 'collection':countyList,'selected':county };
+		createCountyList(send_data);
+	
+	  } else if ( getCookie("ZIP") ) {
+		var zip = getCookie("ZIP");
+		$("#zipCode").val(zip); // Set the zip
+	  } else { 
+		// do nothing 
+	  }
+  
+	  // Java reads the plancode cookie seperate (in this case plancode = planvalue)
+	  if ( getCookie("PLANCODE")){
+		var planValue = getCookie("PLANCODE");
+		$("#planvalue").val(planValue); // Set the planValue
+	  }
+  
+	  // TODO: need a better solution here so the value of 0 doesn't show up in the age field
+	  // Need to set default value so java doesn't blow up
+	  if ( $("#age").attr('type') == 'hidden' ) { $("#age").val('0'); }
+	}
+
+	/***********
+	*	@name:			validatePlanValue()
+	*	@description:	Validate Plan Data? WHY?
+	*
+	*	@param: 		(string) 		planValue Plan Value is the Brand Info/Region
+	*	@param: 		(string) 		errorValue Error Returned by something or other.
+	*	@returns: 		N/A
+	*
+	*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
+	*
+	***********/
+	// Validation for the Plan Value 
+	// checks if ERROR, [empty], or ASURIS is being returned from planCodeService.do
+	function validatePlanValue(planValue, errorValue) {
+	  // validation rules
+	  var eMessage;
+	  if (errorValue == "POORLY_FORMATTED_ZIP") {
+		displayError("Please enter a 5 digit zip code.", ".formErrorsDemo");
+		formValidated = false;
+	  }
+	  else if (errorValue == "OUT_OF_AREA_ERROR" || errorValue == "WRONG_BRAND" || planValue == 'ASURIS' || planValue == 'AS') {
+		displayError("We do not offer Medicare coverage options to residents of the zip code you entered. You can find a Blue Cross and Blue Shield company near you at <a href='http://www.bcbs.com' target='_blank'>www.bcbs.com</a>", ".formErrorsDemo"); //BCBSA cannot reference affiliatesfs
+		formValidated = false;
+	  }
+	  else if ( errorValue == "SYSTEM_ERROR" || planValue == 'ERROR' || planValue == '' ) {
+		eMessage = "We're sorry, but there was a problem finding Medicare plans for you.  For information about our Medicare  plans, please contact us at 1-800-541-8981, (or TTY 711),  between 8 a.m. and 8 p.m. Monday through Friday.  Between October 15 through February 14 our telephone hours are 8 a.m. to 8 p.m., seven days a week.  Customer Service also has free language interpreter services available for non-English speakers.";
+		displayError(eMessage, ".formErrorsDemo");
+		formValidated = false;
+	  } else {
+		removeErrors();
+		formValidated = true;
+	  }
+	}
+
+	/***********
+	*	@name:			removeErrors()
+	*	@description:	Remove Errors from Demographics Form.
+	*
+	*	@param: 		(string) 		planValue Plan Value is the Brand Info/Region
+	*	@param: 		(string) 		errorValue Error Returned by something or other.
+	*	@returns: 		N/A
+	*
+	*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
+	*
+	***********/
+	function removeErrors() {
+	  $(".formErrorsDemo").hide();
+	}
+
+	/***********
+	*	@name:			displayError()
+	*	@description:	Display Errors from Demographics Form.
+	*
+	*	@param: 		(string) 		message Error Message
+	*	@param: 		(string) 		location Location, Really? The location is not even used very much. Shouldn't all elements be consistant?
+	*	@returns: 		N/A
+	*
+	*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
+	*
+	***********/
+	// Show error message
+	function displayError(message, location) {
+	  // Remove any previous errors
+	  $('.spinner').remove();
+	  $("#cboxTitle").attr('style','visibility:display');
+	  $('#getQuoteForm').find('.highlightError').each(function () {
+		$(this).removeClass('highlightError');
+	  });
+	  $(location)
+		.show()
+		.html( '<p class="errortext">'+message+'</p>' ).fadeIn();
+	  $("#getQuoteForm").removeAttr('style');
+	  $.colorbox.resize();
+	}
+
 	// Show the main spinner for submitting form
 	function showSpinner() {
 	  $("#getQuoteForm").attr('style','visibility:hidden').before('<div class="spinner" style=""><h2>Loading...</h2></div>');
@@ -906,152 +1069,6 @@ function checkAvail(dataModel) {
     
   }
 }
-
-/***********
-*	@name:			setFormValues()
-*	@description:	Check if MedAdvantage and/or Medigap is offered, remove tabs if needed
-*
-*	@param: 		(object) 		dataModel Data Model for Value checking
-*	@returns: 		N/A
-*
-*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Make more open and abstract.
-*
-***********/
-function setFormValues(dataModel) {
-  if( getCookie("demographics") ) {
-    var c = eval('(' + getCookie("demographics") + ')');
-    var gender = c['gender']; 
-    var coverage = c['coverage'];
-    var county = c['county'];
-    var serviceArea = c['serviceArea'];
-    $("#gender option[value='"+gender+"']").attr('selected', 'selected'); // Set the gender
-    $("#zipCode").val(c['zip']); // Set the zip
-    $("#age").val(c['age']); // Set the age
-    $("#serviceArea").val(c['serviceArea']); // Set the serviceArea
-    $("#offerMedigap").val(c['offerMedigap']); // Offer Medigap
-    $("#offerMedAdvantage").val(c['offerMedAdvantage']); // Offer MedAdvantage
-    if (c['onMedicare'] == "on"){$("#alreadyMedicare").attr('checked', true);} // Set alreadyMedicare
-    if (c['rememberMe'] == "on"){ $("#rememberMe").attr('checked', true); } // Set remember me
-    $("#coverage"+coverage).attr('checked', 'checked'); // Set coverage selected
-
-
-    // Create the list of Counties
-    var countyList = [];
-    var state = c['state'];
-
-   //  if(debug){
-//       alert('state is returning: '+state);
-//     }
-    if (typeof(state) == "undefined" || state == '') {
-      state=pCode;
-    }
-    if (typeof(state) == "undefined" || state == '') {
-      state=pCode;
-    }
-    countyList = $(this).getCountyList(state);
-    
-    var send_data = { 'collection':countyList,'selected':county };
-    createCountyList(send_data);
-    
-  } else if ( getCookie("ZIP") ) {
-    var zip = getCookie("ZIP");
-    $("#zipCode").val(zip); // Set the zip
-  } else { 
-    // do nothing 
-  }
-  
-  // Java reads the plancode cookie seperate (in this case plancode = planvalue)
-  if ( getCookie("PLANCODE")){
-    var planValue = getCookie("PLANCODE");
-    $("#planvalue").val(planValue); // Set the planValue
-  }
-  
-  // TODO: need a better solution here so the value of 0 doesn't show up in the age field
-  // Need to set default value so java doesn't blow up
-  if ( $("#age").attr('type') == 'hidden' ) { $("#age").val('0'); }
-}
-
-/***********
-*	@name:			setFormValues()
-*	@description:	Check if MedAdvantage and/or Medigap is offered, remove tabs if needed
-*
-*	@param: 		(string) 		planValue Plan Value is the Brand Info/Region
-*	@param: 		(string) 		errorValue Error Returned by something or other.
-*	@returns: 		N/A
-*
-*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
-*
-***********/
-// Validation for the Plan Value 
-// checks if ERROR, [empty], or ASURIS is being returned from planCodeService.do
-function validatePlanValue(planValue, errorValue) {
-  // validation rules
-  var eMessage;
-  if (errorValue == "POORLY_FORMATTED_ZIP") {
-    displayError("Please enter a 5 digit zip code.", ".formErrorsDemo");
-    formValidated = false;
-  }
-  else if (errorValue == "OUT_OF_AREA_ERROR" || errorValue == "WRONG_BRAND" || planValue == 'ASURIS' || planValue == 'AS') {
-    displayError("We do not offer Medicare coverage options to residents of the zip code you entered. You can find a Blue Cross and Blue Shield company near you at <a href='http://www.bcbs.com' target='_blank'>www.bcbs.com</a>", ".formErrorsDemo"); //BCBSA cannot reference affiliatesfs
-    formValidated = false;
-  }
-  else if ( errorValue == "SYSTEM_ERROR" || planValue == 'ERROR' || planValue == '' ) {
-    eMessage = "We're sorry, but there was a problem finding Medicare plans for you.  For information about our Medicare  plans, please contact us at 1-800-541-8981, (or TTY 711),  between 8 a.m. and 8 p.m. Monday through Friday.  Between October 15 through February 14 our telephone hours are 8 a.m. to 8 p.m., seven days a week.  Customer Service also has free language interpreter services available for non-English speakers.";
-    displayError(eMessage, ".formErrorsDemo");
-    formValidated = false;
-  } else {
-    removeErrors();
-    formValidated = true;
-  }
-}
-
-/***********
-*	@name:			removeErrors()
-*	@description:	Remove Errors from Demographics Form.
-*
-*	@param: 		(string) 		planValue Plan Value is the Brand Info/Region
-*	@param: 		(string) 		errorValue Error Returned by something or other.
-*	@returns: 		N/A
-*
-*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
-*
-***********/
-function removeErrors() {
-  $(".formErrorsDemo").hide();
-}
-
-/***********
-*	@name:			displayError()
-*	@description:	Display Errors from Demographics Form.
-*
-*	@param: 		(string) 		message Error Message
-*	@param: 		(string) 		location Location, Really? The location is not even used very much. Shouldn't all elements be consistant?
-*	@returns: 		N/A
-*
-*	@TODO:			Refactor and make run on Data Model. Reduce Minification and reduce ID calls. Abstract and Roll into approp
-*
-***********/
-// Show error message
-function displayError(message, location) {
-  // Remove any previous errors
-  $('.spinner').remove();
-  $("#cboxTitle").attr('style','visibility:display');
-  $('#getQuoteForm').find('.highlightError').each(function () {
-    $(this).removeClass('highlightError');
-  });
-  $(location)
-    .show()
-    .html( '<p class="errortext">'+message+'</p>' ).fadeIn();
-  $("#getQuoteForm").removeAttr('style');
-  $.colorbox.resize();
-}
-
-// Show the main spinner for submitting form
-function showSpinner() {
-  $("#getQuoteForm").attr('style','visibility:hidden').before('<div class="spinner" style=""><h2>Loading...</h2></div>');
-  $("#cboxTitle").attr('style','visibility:hidden');
-}
-
 
 /***********
 *	@name:			jumpMenu()
