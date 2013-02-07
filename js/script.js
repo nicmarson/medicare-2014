@@ -706,6 +706,7 @@ function displayInitialModal(dataModel){
 	if (dataModel.zip){
 		zipCodeValue = dataModel.zip;
 	}else{
+		$('#zipCode').val('');
 		$('#demographicsModalLabel').text('Demographics')
 		$('#demographicsModal .close').addClass('hide');
 		$('#demographicCloseButton').addClass('hide');
