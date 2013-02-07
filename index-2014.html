@@ -256,7 +256,7 @@
     <form id="getQuoteForm" class="validateMe" method="get">
 
       <label for="zipCode">Zip Code</label>
-      <input id="zipCode" name="zipCode" class="textbox" type="text" autofocus="autofocus" value="" size="6" maxlength="5" />
+      <input type="text" class="input-small" id="zipCode" name="zipCode" autofocus required pattern="(\d{5}([\-]\d{4})?)"/>
 
       <div class="county" id="countyDropdown">
         <label for="counties">Select your county</label>
