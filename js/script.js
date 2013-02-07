@@ -236,7 +236,7 @@ function attachDemographicsForm(dataModel){
 	
 	$('#demographicSaveButton').click(function(){
 		//setFormSubmitHandler('/medicare/index.jsp', 'false', 'medicareBasic');
-		setFormSubmitHandler('/medicare-2014/index-2014.html', dataModel);
+		setFormSubmitHandler('#', dataModel);
 	});
 	
 	/***********
@@ -470,8 +470,16 @@ function attachDemographicsForm(dataModel){
 	  }
 	}
 	
+	/***********
+	*	@name:			setCookieString()
+	*	@description:	Ajax Call to Evaluate County List XML
+	*
+	*	@param: 		(object)	formData form submitted data array serialized
+	*	@returns: 		(object)	dataModel dataModel
+	*
+	*	@TODO			Really why is this separate
+	***********/
 	function setCookieString(formData, dataModel) {	
-		
 		// map data from form to progressive dataModel
 		dataModel.coverage				= formData.coverage;		// Coverage year
 		dataModel.planValue				= formData.planvalue;		// State identification
