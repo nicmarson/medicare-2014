@@ -49,11 +49,7 @@ var currentTallest = 0,
 $(function() {
   
   // Position buttons in equal height containers
-  $(".btn-container-bottom .btn-positioned").css({
-    bottom: 0,
-    left: 0,
-    position: "absolute"
-  });
+  $(".btn-container-bottom .btn-positioned").addClass("btn-positioned-on");
 
   // Add visual toggle icons
   $('ol.breadcrumb a').after(' <span class="divider" role="separator">/</span>');

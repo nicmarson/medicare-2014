@@ -49,11 +49,6 @@ h3 {
 }
 
 
-.breadcrumb > li > .divider {
-  color: @gray;
-}
-
-
 // Orange Square Bullets
 ul.bulleted li {
   margin: @baseLineHeight / 2 0;
@@ -80,38 +75,25 @@ ul.bulleted > li {
 }
 
 // Navigation
-nav.toplevel {
-  position: relative;
-
-  li > a:hover {
-    background-color: transparent;
-  }
+nav.toplevel li > a:hover {
+  background-color: transparent;
 }
-.nav-brand {
-  float: left;
-
-  a {
-    min-height: 47px;
-  }
+.nav-brand a {
+  min-height: 47px;
 }
 .nav-phone {
-  position: absolute;
-  right: 0;
-  text-align: right;
-  top: 0;
-
   li {
     display: inline;
     list-style: none;
+  }
+  ul {
+    margin: 0 0 6px;
   }
 }
 .lt-ie9 .nav-phone {
   width: 30em;
 }
 .nav .nav-help {
-  bottom: 10px;
-  position: absolute;
-  right: 0;
 
   a {
     display: inline;
@@ -124,6 +106,7 @@ nav.toplevel {
 }
 
 
+// Navigation
 #nav {
   font-size: 16px;
 
@@ -131,11 +114,21 @@ nav.toplevel {
     font-weight: 700;
   }
 }
-
-
 .navbar-inverse .navbar-inner {
   color: @white;
 }
+.breadcrumb > li > .divider {
+  color: @gray;
+}
+.nav-breadcrumb {
+  position: relative;
+}
+#showZipCode {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+}
+
 
 // Hero with image
 .hero-image {
@@ -143,14 +136,14 @@ nav.toplevel {
   position: relative;
 }
 
+
 // Medicare Hero
 .hero-medicare {
   background-color: #0064cd;
-  background-position: right top;
-  background-repeat: no-repeat;
   color: @white;
 
   h1 {
+    color: @white;
     font-size: 40px;
     line-height: 40px;
 
@@ -161,23 +154,14 @@ nav.toplevel {
     }
   }
   .hero-inner {
-    height: 120px;
-    padding: 20px 335px 0 15px;
-  }
-}
-.medicare-home {
-
-  .hero-medicare {
-    background-image: url("http://www.regence.com/medicare/images/homebox-bg.jpg");
+    padding-bottom: 20px;
+    padding-left: 15px;
+    padding-top: 20px;
   }
 }
 
 
 // Button Containers
-.btn-container-bottom {
-  padding-bottom: 40px;
-  position: relative;
-}
 .btn-block {
   padding-left: 15px;
   text-align: left;
@@ -248,3 +232,66 @@ nav.toplevel {
     color: #197b37;
   }
 }
+
+// MEDIA QUERIES
+// ------------------
+
+// Large desktops
+@media (min-width: 1200px) {
+}
+
+// Desktops and larger
+@media (min-width: 980px) {
+  nav.toplevel {
+    position: relative;
+  }
+  .nav-brand {
+    float: left;
+  }
+  .nav-phone {
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+  }
+  .nav .nav-help {
+    bottom: 10px;
+    position: absolute;
+    right: 0;
+  }
+}
+
+// Tablets to regular desktops
+@media (min-width: 768px) and (max-width: 979px) {
+}
+
+// Tablets and larger
+@media (min-width: 768px) {
+  .btn-container-bottom {
+    padding-bottom: 40px;
+    position: relative;
+  }
+  .btn-positioned-on {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+  .hero-medicare {
+    background-position: right top;
+    background-repeat: no-repeat;
+
+    .hero-inner {
+      height: 100px;
+      padding-right: 335px;
+    }
+  }
+  .medicare-home .hero-medicare {
+    background-image: url("http://www.regence.com/medicare/images/homebox-bg.jpg");
+  }
+}
+
+// Phones to portrait tablets and narrow desktops
+@media (max-width: 767px) {
+}
+
+
