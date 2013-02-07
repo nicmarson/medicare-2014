@@ -2,19 +2,13 @@
 *
 * Medicare 2013 JS
 * Author	Tara Grieb and Unnamed Uncountable Legacy Coders
-* Thought	There are no temporary fixes, just permanent patches.
+* Thought	There are no temporary fixes, just permanent patches. ಠ_ಠ
 *
-*	@TODO	Come up with a better Debug method
+*	@TODO	Come up with a better Debug method 
 *
 ***********************/
 
-
-$(function() {
-	
-	
-// 		setCookie('ZIP',"97217",90);
-//  	setCookie('PLANCODE',"OR",90);
-	
+$(function() {	
 	// Set the jumpMenu event, this is awful.
 	$('#jumpMenu').change(function(){
 		jumpMenu($(this).val());
@@ -40,8 +34,6 @@ $(function() {
 	
 	// Event Binding Setup for External Site Links.
 	attachExternalSite();
-	
-	console.log(demographicsDataModel);
 });
 
 /***********************
@@ -137,41 +129,6 @@ function setDataModel(dataModel, options){
 	return newDataModel;
 }
 
-
-/***********
-*	@name:			setCookiesFromDataModel()
-*	@description:	Set Cookies From Datamodel and use Map if needed.
-*
-*	@param: 		(string) 		data Model	 	Data Model to Build Cookies Form
-*	@param: 		(object) 		options 		Object Containing Optional Params (Not Used)
-*
-*	@returns: 		(string|false)	
-*
-*	@TODO			Might be value in rolling this in as a polymorphic function of the basic set cookie. 
-***********/
-// function setCookiesFromDataModel(dataModel, options){
-// 	
-// 	var values	= typeof(options.values) 	!= 'undefined'	? options.values 	: false;
-// 	var map		= typeof(options.map) 		!= 'undefined'	? options.map 		: false;
-// 	
-// 	
-// 	$.each(dataModel, function(dataModelKey, dataModelValue){
-// 			
-// 			newDataModel[dataModelKey] = getCookie(dataModelKey);
-// 			if (map){
-// 				$.each(map, function(mapKey, mapValue){
-// 					if (mapValue == dataModelKey && getCookie(mapKey)){
-// 						newDataModel[dataModelKey] = getCookie(mapKey);
-// 					}
-// 				});
-// 			}
-// 		}
-// 	});
-// 	
-// 	return;
-// }
-
-
 /***********
 *	@name:			setCookies()
 *	@description:	Multiple Cookies at one time
@@ -192,8 +149,6 @@ function setCookies(keyValuePairs, options){
 	return;
 }
 
-
-
 /***********************
 *
 * Event Bindings
@@ -209,7 +164,7 @@ function setCookies(keyValuePairs, options){
 ***********/
 function attachExternalSite(){
 	var planCode = getCookie("PLANCODE");
-	console.log(planCode)
+	//console.log(planCode)
 	if(planCode == 'WA' || planCode == 'WARBS' || planCode == 'OR') {
 		$('.external-site').click(function(e){
 		
@@ -284,9 +239,6 @@ function attachDemographicsForm(dataModel){
 		setFormSubmitHandler('/medicare-2014/index-2014.html', dataModel);
 	});
 	
-	
-	
-	
 	/***********
 	*	@name:			handleZip()
 	*	@description:	Internal Function get data from the zip
@@ -321,7 +273,6 @@ function attachDemographicsForm(dataModel){
 		});
 		planCodeAjax.done(function(data){
 			//console.log(data);
-			console.log(dataModel)
 			$(data).find("plancode").each(function(){
 				var planValue 	= $(this).find('value').text();
 				var area    	= $(this).find('area').text();
@@ -334,8 +285,6 @@ function attachDemographicsForm(dataModel){
 					area = 'id';
 				}
 
-				
-			
 				validatePlanValue(planValue, errorValue);
 				if ( formValidated == false) {
 				  return false;
@@ -353,7 +302,7 @@ function attachDemographicsForm(dataModel){
 					var counties = [];
 					// Clark County returns OR although we want the county list from WARBS
 					if (area == 'clark_co'){
-						planValue = 'WARBS'; //if(debug){alert('returning clark county');}
+						planValue = 'WARBS'; 
 					} 
 					counties = getCountyList(planValue);
 					var send_data = { 'collection':counties };
@@ -361,9 +310,7 @@ function attachDemographicsForm(dataModel){
 					
 					// Only display the dropdown if there is data, duh.
 					$('#countyDropdown').show();
-					//setCookie('ZIP', ( zipcode ), 0);
 					$("#planvalue").val(planValue); // Set planValue
-					//setCookie('PLANCODE', ( planValue ), 0);
 				}
 			});
 		});
@@ -456,8 +403,6 @@ function attachDemographicsForm(dataModel){
 	  $("#offerMedAdvantage").val(offer_medadvantage);
 	}
 	
-
-	
 	/***********
 	*	@name:			getCountyList()
 	*	@description:	Ajax Call to Evaluate County List XML
@@ -470,45 +415,7 @@ function attachDemographicsForm(dataModel){
 	// Submit Handler for the form
 	//var formValidated;
 	function setFormSubmitHandler(action, dataModel) {
-	  // Validation Rules
-// 	  var container = $('.formErrorsDemo');
-// 	  $('#getQuoteForm').validate({
-// 		errorLabelContainer: container,
-// 		errorClass: "errortext",
-// 		errorPlacement: function(error, element) {
-// 		  $( container ).append(error);
-// 		}, 
-// 		wrapper: "p",
-// 		ignore: ".ignore",
-// 		rules: {
-// 		  zip: {
-// 			required: true
-// 		  },
-// 		  county: {required: true},
-// 		  coverage: {required: true}, 
-// 		  //onMedicare: { required: true },
-// 		  g0: {required: true},
-// 		  a0: {
-// 			required: true,
-// 			greaterThanMedigapAge : true
-// 		  }
-// 		},
-// 		messages: {
-// 		  zip: "Please provide a zip code",
-// 		  county: "Please select a county",
-// 		  coverage: "Please select a coverage year",
-// 		  //onMedicare: "Regence Medicare products are only available if you are Medicare eligible. <a href='/individual/medical/index.jsp'>Learn more</a> about our other plan offerings.",
-// 		  g0: "Please select a gender",
-// 		  a0: {
-// 			required: "Please enter an age",
-// 			greaterThanMedigapAge: "To qualify for Medigap coverage, you must be 65 or older. You indicated that you are not 65."
-// 		  }
-// 		},
-		//submitHandler: function(form){
-		
-		
-		//showSpinner();
-
+	
 		var coverageYear	= $("input[name='coverage']:checked").val();
 		var countyValue		= $("#counties").val();
 		var serviceArea		= $("#serviceArea").val();
@@ -540,8 +447,6 @@ function attachDemographicsForm(dataModel){
 		});
 		
 		setCookieString(paramObj, dataModel);
-		console.log($('#demographicsDataStorage').data());
-		scdcs
 		window.location = url;
 	}
 // 	  });
@@ -562,16 +467,12 @@ function attachDemographicsForm(dataModel){
 		//if(debug){alert("full url being set to "+url);}
 		formValidated = false;
 		window.location = url;
-	
-	  } else {
-		// do nothing
 	  }
 	}
 	
 	function setCookieString(formData, dataModel) {	
 		
-		console.log(formData);
-		
+		// map data from form to progressive dataModel
 		dataModel.coverage				= formData.coverage;		// Coverage year
 		dataModel.planValue				= formData.planvalue;		// State identification
 		dataModel.county				= formData.counties;		// County name
@@ -583,9 +484,6 @@ function attachDemographicsForm(dataModel){
 		dataModel.state					= formData.state;			// state identifier -- Or you know, State, since a name IS an identifier.
 		dataModel.offerMedAdvantage		= formData.offerMedAdvantage;
 		dataModel.offerMedigap			= formData.offerMedigap;
-		
-		console.log(dataModel);
-		
 		
 		// Remember user sets the expiration days of cookie (THIS SHOULD NOT MAKE DOM CALLS)
 		if ( $("input[name=keepMe]").is(':checked') ) {
@@ -760,7 +658,7 @@ function attachDemographicsForm(dataModel){
 	// Show error message
 	function displayError(message, location) {
 	  // Remove any previous errors
-	  $('.spinner').remove();
+	  //$('.spinner').remove();
 	  $("#cboxTitle").attr('style','visibility:display');
 	  $('#getQuoteForm').find('.highlightError').each(function () {
 		$(this).removeClass('highlightError');
@@ -769,7 +667,8 @@ function attachDemographicsForm(dataModel){
 		.show()
 		.html( '<p class="errortext">'+message+'</p>' ).fadeIn();
 	  $("#getQuoteForm").removeAttr('style');
-	  $.colorbox.resize();
+	  //$.colorbox.resize();
+	  $('#countyDropdown').hide();
 	}
 
 	// Show the main spinner for submitting form
@@ -864,7 +763,7 @@ function getCookie(cookieName){
 *	@returns: 		(string|false)	Requested Cookie Value
 ***********/
 function setCookie(name,value,days) {
-	console.log(name + ', ' + value + ', ' + days);
+	//console.log(name + ', ' + value + ', ' + days);
 	if (days) {
 		var date = new Date();
 		date.setTime(date.getTime()+(days*24*60*60*1000));
