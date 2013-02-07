@@ -525,18 +525,23 @@ function attachDemographicsForm(dataModel){
 			if (serviceArea != 'default'){
 				$('#planValue') = serviceArea;
 			}
-			
-			// //if(debug){log("Cookie data being passed to PLANCODE:\n"+cookie_data)}
-// 			setCookie("PLANCODE", ( cookie_data ), 0 );
-// 			setCookie("ZIPCODE", z,  0 );
-// 			setCookie("county", countyValue, 0 );
-			
-			
-			//
 		}
 		var url = "/medicare/"+coverageLoc+"?"+$("#getQuoteForm").serialize();
 		
-		setCookieString($('#getQuoteForm').serializeArray(), dataModel);
+		var paramObj = {};
+		$.each($('#getQuoteForm').serializeArray(), function(_, kv) {
+		  if (paramObj.hasOwnProperty(kv.name)) {
+			paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+			paramObj[kv.name].push(kv.value);
+		  }
+		  else {
+			paramObj[kv.name] = kv.value;
+		  }
+		});
+		
+		setCookieString(paramObj, dataModel);
+		console.log($('#demographicsDataStorage').data());
+		scdcs
 		window.location = url;
 	}
 // 	  });
@@ -564,42 +569,9 @@ function attachDemographicsForm(dataModel){
 	}
 	
 	function setCookieString(formData, dataModel) {	
-		var exp;
-		var keepMe; 
-		var alreadyMedicare;
-		var coverage = $("input[name=coverage]:checked").val(); // Coverage year
-		var planValue = getCookie("PLANCODE"); // State identification
-		var county = $("#counties").val(); // County name
-		var serviceArea = $("#serviceArea").val(); // Default will use planValue, otherwise will overwrite planValue
-		var zip = $("#ZipCode").val(); // Zip code
-		var age = $("#age").val(); // Age
-		var gender = $("#gender").val(); // Gender
-		var plancode = $("#plancode").val(); // Asuris or non-asuris 
-		var state = $("#state").val(); // state identifier
-		var offerMedAdvantage = $("#offerMedAdvantage").val();
-		var offerMedigap = $("#offerMedigap").val();
 		
-		zipCode=97217&
-		counties=Clatsop&
-
-		onMedicare=on&
-		serviceArea=default&
-		state=OR&
-		offerMedigap=true&
-		offerMedAdvantage=true&
-		plancode=non-asuris&
-		a0=0&
-		plantype=unknown&
-		fromFile=&
-		g0=m&
-		r0=s&
-		t0=off&
-		fromFile=index&
-		a0=65 
+		console.log(formData);
 		
-		dataModel.exp					= false;
-		
-		dataModel.alreadyMedicare		= false;
 		dataModel.coverage				= formData.coverage;		// Coverage year
 		dataModel.planValue				= formData.planvalue;		// State identification
 		dataModel.county				= formData.counties;		// County name
@@ -612,45 +584,47 @@ function attachDemographicsForm(dataModel){
 		dataModel.offerMedAdvantage		= formData.offerMedAdvantage;
 		dataModel.offerMedigap			= formData.offerMedigap;
 		
+		console.log(dataModel);
 		
-		cdnjjdnjks
+		
 		// Remember user sets the expiration days of cookie (THIS SHOULD NOT MAKE DOM CALLS)
 		if ( $("input[name=keepMe]").is(':checked') ) {
-		exp = 90; // Remember user
+		dataModel.exp 		= 90; // Remember user
+		dataModel.keepMe	= 'on'; 
 		$("input[name=keepMe]").val('on');
-		dataModel.keepMe	= 'on'; 
 		} else {
-		exp = 0; // Do not remember user
-		dataModel.keepMe	= 'on'; 
+		dataModel.exp 		= 0; // Do not remember user
+		dataModel.keepMe	= 'off'; 
 		}
 
 		// set value to already Medicare field
 		if ( $("input[name=onMedicare]").is(':checked') ) {
 		$("input[name=onMedicare]").val('on');
-		alreadyMedicare = 'on';
+		dataModel.alreadyMedicare	= 'on';
 		} else {
-		alreadyMedicare = 'off';
+		dataModel.alreadyMedicare	= 'off';
 		}
-
-		var cookieString = "{'zip':'" + zip + "','age':'" + age + "', 'state':'" + state + "', 'county':'" + county + "', 'serviceArea':'" + serviceArea + "', 'gender':'" + gender + "', 'offerMedAdvantage':'" + offerMedAdvantage + "', 'offerMedigap':'" + offerMedigap + "', 'coverage':'" + coverage + "', 'onMedicare':'" + alreadyMedicare + "', 'plancode':'" + plancode + "', 'rememberMe':'" + keepMe + "'}";
+		
+		
+		
+		var cookieString = "{'zip':'" + dataModel.zip + "','age':'" + dataModel.age + "', 'state':'" + dataModel.state + "', 'county':'" + dataModel.county + "', 'serviceArea':'" + dataModel.serviceArea + "', 'gender':'" + dataModel.gender + "', 'offerMedAdvantage':'" + dataModel.offerMedAdvantage + "', 'offerMedigap':'" + dataModel.offerMedigap + "', 'coverage':'" + dataModel.coverage + "', 'onMedicare':'" + dataModel.alreadyMedicare + "', 'plancode':'" + dataModel.plancode + "', 'rememberMe':'" + dataModel.keepMe + "'}";
 
   
   
 		// Demographics cookie
-		setCookie("demographics", ( cookieString ), exp );
+		setCookie("demographics", ( cookieString ), dataModel.exp );
 
 		// Plancode coookie 
-		setCookie("PLANCODE", ( planValue ), exp );
+		setCookie("PLANCODE", ( dataModel.planValue ), dataModel.exp );
 
 		// SALO: the medigap pages are still using these cookies, annoying... 
 		// need to set them here to navigate from medAdvantage to medigap
-		var zip; var age; var gender;
-		zip = $('#ZipCode').val();
-		age = $('#age').val();
-		gender = $('#gender').val();
-		setCookie('age0', ( age ), 0);
-		setCookie('ZIP', ( zip ), 0);
-		setCookie('gender0', ( gender ), 0);
+
+		setCookie('age0', ( dataModel.age ), 0);
+		setCookie('ZIP', ( dataModel.zip ), 0);
+		setCookie('ZIPCODE', ( dataModel.zip ), 0);
+		setCookie('gender0', ( dataModel.gender ), 0);
+		$('#demographicsDataStorage').data(dataModel);
 	}
 	
 	// Show the main spinner for submitting form
