@@ -425,13 +425,8 @@ function attachDemographicsForm(dataModel){
 		// direct page
 		partDonly(action); // This will redirect users to another page if only part D is offered for their region
 
-		if ( formValidated == false) {
-			return false;
-		} else {
-			// set plancode cookie
-			if (serviceArea != 'default'){
-				$('#planValue') = serviceArea;
-			}
+		if (serviceArea != 'default'){
+			$('#planValue').val(serviceArea);
 		}
 		var url = "/medicare/"+coverageLoc+"?"+$("#getQuoteForm").serialize();
 		
