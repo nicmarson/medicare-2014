@@ -326,7 +326,7 @@ function attachDemographicsForm(dataModel){
 	*	@TODO			Really why is this separate
 	***********/
 	function getCountyList(state) {
-	  var countyList = [];
+	  var countyList = new Object;
 	  $.ajax({
 		type: 'GET',
 		dataType: 'xml',
@@ -430,7 +430,7 @@ function attachDemographicsForm(dataModel){
 		}
 		var url = "/medicare/"+coverageLoc+"?"+$("#getQuoteForm").serialize();
 		
-		var paramObj = {};
+		var paramObj = new Object;
 		$.each($('#getQuoteForm').serializeArray(), function(_, kv) {
 		  if (paramObj.hasOwnProperty(kv.name)) {
 			paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
