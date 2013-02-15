@@ -65,7 +65,7 @@ function Demographics(){
 	this.offerMedAdvantage	= false;
 	this.offerMedigap		= false;
 	
-	demographicsDataStorage = $('<div>',{'id': 'demographicsDataStorage'}).appendTo('body').data(this);
+	$('<div>',{'id': 'demographicsDataStorage'}).appendTo('body').data(this);
 	return;
 }
 
@@ -256,8 +256,7 @@ function attachDemographicsForm(dataModel){
 		{
 			var planCodeURL = 'plancode.html';
 			//var planCodeURL = '/planCodeService.do';
-		}else{
-			var planCodeURL = '/planCodeService.do';
+		}else{var planCodeURL = 'plancode.html';
 		}
 
 		// Get the plan value from planCodeService.do
@@ -326,11 +325,11 @@ function attachDemographicsForm(dataModel){
 	*	@TODO			Really why is this separate
 	***********/
 	function getCountyList(state) {
-	  var countyList = new Object;
+	  var countyList = new Array;
 	  $.ajax({
 		type: 'GET',
-		dataType: 'xml',
 		url: '/xml/USStateList.xml',
+		//dataType: 'xml',
 		data: state,
 		async: false,
 		success: function (xmlDoc) {
@@ -347,7 +346,7 @@ function attachDemographicsForm(dataModel){
 		}
 	  });
 	  //if (debug){log('DEBUG: getCountyList is returning '+countyList)};
-  
+  	console.log(countyList);
 	  return countyList; // returns array of county names
 	}
 	
