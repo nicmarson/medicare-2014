@@ -256,7 +256,8 @@ function attachDemographicsForm(dataModel){
 		{
 			var planCodeURL = 'plancode.html';
 			//var planCodeURL = '/planCodeService.do';
-		}else{var planCodeURL = 'plancode.html';
+		}else{
+			var planCodeURL = '/planCodeService.do';
 		}
 
 		// Get the plan value from planCodeService.do
